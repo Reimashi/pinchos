@@ -1,10 +1,11 @@
 <?php
 if (defined('PINCHOSFW'))
 {
-    private static $instance;
-    private $configuration;
 
     class Configuration {
+        private static $instance;
+        private $configuration;
+        
         private function __construct()
         {
             $this->loadConfig();
