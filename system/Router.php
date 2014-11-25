@@ -42,16 +42,17 @@ if (defined('PINCHOSFW'))
                 }
 
                 if (isset($path[1]) && $path[1] != "") {
-                    $this->action = $path[1];
+                    $this->action = strtolower($path[1]);
                 }
                 else {
                     $this->action = 'index';
                 }
 
-                $params = isset($_GET) && is_array($_GET) ? $_GET : array();
+                // Establecemos los parametros
+                $this->params = (isset($_GET) && is_array($_GET)) ? $_GET : array();
 
                 if (count($path) > 2) {
-                    $params = array_merge($params, array_slice($params, 2));
+                    $this->params = array_merge($this->params, array_slice($path, 2));
                 }
             }
             else {
@@ -72,7 +73,8 @@ if (defined('PINCHOSFW'))
                     if (method_exists($controllername, $this->action))
                     {
                         $minstance = new $controllername();
-                        $minstance->$this->action($this->params);
+                        $mmethod = $this->action;
+                        $minstance->$mmethod($this->params);
                         return TRUE;
                     }
                     else
