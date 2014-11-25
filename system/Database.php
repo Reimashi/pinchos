@@ -12,7 +12,7 @@ if (defined('PINCHOSFW'))
             $config = Configuration::getInstance();
             $this->db = new mysqli($config->dbhost, $config->dbuser, $config->dbpass, $config->dbname);
             if ($this->db->connect_errno) {
-                trigger_error('No se ha podido conectar con la base de datos. <' . $this->db->connect_errno . '>', E_USER_ERROR);
+                trigger_error('No se ha podido conectar con la base de datos. (' . $this->db->connect_errno . ')', E_USER_ERROR);
             }
         }
 

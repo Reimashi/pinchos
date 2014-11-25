@@ -47,7 +47,7 @@ if (defined('PINCHOSFW'))
                 return $this->configuration[$name];
             }
 
-            trigger_error('La configuración <' . $name . '> no existe.', E_USER_WARNING);
+            trigger_error('La configuración (' . $name . ') no existe.', E_USER_WARNING);
             return FALSE;
         }
     };
