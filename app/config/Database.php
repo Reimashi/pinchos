@@ -8,3 +8,5 @@ $config['dbhost'] = 'localhost';
 $config['dbuser'] = 'testuser';
 $config['dbpass'] = 'testpass';
 $config['dbname'] = 'pinchosdb';
+
+?>
