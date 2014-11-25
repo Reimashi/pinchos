@@ -1,7 +1,7 @@
 <?php
 if (defined('PINCHOSFW'))
 {
-    require_once('Configuration.php');
+    require_once (SYSTEM_FOLDER . 'Configuration.php');
 
     class Database {
         private static $instance;

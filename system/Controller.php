@@ -1,9 +1,8 @@
 <?php
 if (defined('PINCHOSFW'))
 {
+    require_once (SYSTEM_FOLDER . 'Configuration.php');
 
-    require_once('Configuration.php');
-    
     abstract class Controller
     {
         protected $config;
@@ -12,7 +11,6 @@ if (defined('PINCHOSFW'))
             $this->config = Configuration::getInstance();
         }
     };
-
 }
 else
 {

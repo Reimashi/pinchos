@@ -1,6 +1,7 @@
 <?php
 if (defined('PINCHOSFW'))
 {
+    require_once (SYSTEM_FOLDER . 'Database.php');
 
     abstract class Model
     {
