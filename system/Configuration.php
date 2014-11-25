@@ -5,7 +5,7 @@ if (defined('PINCHOSFW'))
     class Configuration {
         private static $instance;
         private $configuration;
-        
+
         private function __construct()
         {
             $this->loadConfig();
