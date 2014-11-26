@@ -10,6 +10,7 @@
     define ("APP_FOLDER", realpath(dirname(BASE_PATH)) . "/app/");
     define ("SYSTEM_FOLDER", realpath(dirname(BASE_PATH)) . "/system/");
     define ("SITE_URL", $httpprotocol . $_SERVER['HTTP_HOST'] .'/'. BASE_PATH);
+    define ("RESOURCES_URL", SITE_URL . '/app/static/');
 
     // Cargamos el router
     require_once (SYSTEM_FOLDER . 'Router.php');
