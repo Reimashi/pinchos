@@ -2,6 +2,7 @@
 if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Configuration.php');
+    require_once (SYSTEM_FOLDER . 'Template.php');
 
     abstract class Controller
     {
@@ -13,24 +14,9 @@ if (defined('PINCHOSFW'))
             $this->config = Configuration::getInstance();
         }
 
-        protected function render ($name, $params, $return = false) {
-            $viewfile = APP_FOLDER . "views/" . $name . '.html';
-            $code = "";
-
-            if (file_exists($viewfile)) {
-                $code = file_get_contents ($viewfile);
-                // Cargamos subvistas
-                preg_replace('/{{{([A-z0-9]*)}}}/', $this->render(trim($1)), $code);
-                // Cargamos variables
-                preg_replace('/{{([A-z0-9]*)}}/', $params[trim($1)], $code);
-            }
-
-            if ($return) {
-                return $code;
-            }
-            else {
-                echo $code;
-            }
+        protected function render ($name, $params = array(), $return = false) {
+            $template = new Template($name);
+            return $template->render($params, $return);
         }
 
         protected function loadModel ($name) {
@@ -47,7 +33,7 @@ if (defined('PINCHOSFW'))
                     if (class_exists($modelname) &&
                         is_subclass_of($modelname, 'Model'))
                     {
-                        $this->models->$modelname = new $modelname();
+                        $this->models[$modelname] = new $modelname();
                         return TRUE;
                     }
                     else
