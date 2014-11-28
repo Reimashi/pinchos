@@ -3,9 +3,9 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Model.php');
 
-    class Init extends Model {
+    class Users extends Model {
         public function getUser ($id) {
-
+            
         }
     };
 
