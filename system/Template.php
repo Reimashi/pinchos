@@ -6,7 +6,7 @@ if (defined('PINCHOSFW'))
         private $viewfile;
 
         public function __construct($name) {
-            $vfile = APP_FOLDER . "views/" . $name . '.html';
+            $vfile = APP_FOLDER . "views/" . $name . '.php';
 
             if (file_exists($vfile)) {
                 $this->viewfile = $vfile;
