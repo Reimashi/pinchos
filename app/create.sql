@@ -310,12 +310,12 @@ SET SQL_MODE = '';
 GRANT USAGE ON *.* TO testuser;
  DROP USER testuser;
 SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-CREATE USER 'testuser' IDENTIFIED BY 'testpass';
+CREATE USER 'testuser'@'localhost' IDENTIFIED BY 'testpass';
 
-GRANT ALL ON `pinchosdb`.* TO 'testuser';
-GRANT SELECT ON TABLE `pinchosdb`.* TO 'testuser';
-GRANT SELECT, INSERT, TRIGGER ON TABLE `pinchosdb`.* TO 'testuser';
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `pinchosdb`.* TO 'testuser';
+GRANT ALL ON `pinchosdb`.* TO 'testuser'@'localhost';
+GRANT SELECT ON TABLE `pinchosdb`.* TO 'testuser'@'localhost';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `pinchosdb`.* TO 'testuser'@'localhost';
+GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `pinchosdb`.* TO 'testuser'@'localhost';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
