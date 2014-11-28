@@ -13,6 +13,26 @@ if (defined('PINCHOSFW'))
             $this->config = Configuration::getInstance();
         }
 
+        protected function render ($name, $params, $return = false) {
+            $viewfile = APP_FOLDER . "views/" . $name . '.html';
+            $code = "";
+
+            if (file_exists($viewfile)) {
+                $code = file_get_contents ($viewfile);
+                // Cargamos subvistas
+                preg_replace('/{{{([A-z0-9]*)}}}/', $this->render(trim($1)), $code);
+                // Cargamos variables
+                preg_replace('/{{([A-z0-9]*)}}/', $params[trim($1)], $code);
+            }
+
+            if ($return) {
+                return $code;
+            }
+            else {
+                echo $code;
+            }
+        }
+
         protected function loadModel ($name) {
             if (isset($this->models->$name)) {
                 return TRUE;
