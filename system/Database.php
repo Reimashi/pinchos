@@ -3,6 +3,9 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Configuration.php');
 
+    /**
+     * Clase singleton que administra una unica conexión con la base de datos.
+     */
     class Database {
         private static $instance;
         private $db;
@@ -20,6 +23,9 @@ if (defined('PINCHOSFW'))
             return $this->db;
         }
 
+        /**
+         * Metodo que obtine una conexión valida con la base de datos sobre la que se pueden realizar consultas.
+         */
         public static function getDatabase()
         {
             if (  !self::$instance instanceof self)

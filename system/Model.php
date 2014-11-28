@@ -3,6 +3,9 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Database.php');
 
+    /**
+     * Clase abstracta a heredar por todos los modelos.
+     */
     abstract class Model
     {
         protected $db;

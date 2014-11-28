@@ -2,6 +2,9 @@
 if (defined('PINCHOSFW'))
 {
 
+    /**
+     * Clase singleton que carga y almacena los archivos de configuración de la app.
+     */
     class Configuration {
         private static $instance;
         private $configuration;
@@ -11,6 +14,9 @@ if (defined('PINCHOSFW'))
             $this->loadConfig();
         }
 
+        /**
+         * Metodo que carga los archivos de configuración.
+         */
         private function loadConfig()
         {
             $this->configuration = array();
@@ -28,6 +34,9 @@ if (defined('PINCHOSFW'))
             }
         }
 
+        /**
+        * Metodo que permite obtener una instancia de la clase Configuration.
+        */
         public static function getInstance()
         {
             if (  !self::$instance instanceof self)
@@ -37,11 +46,18 @@ if (defined('PINCHOSFW'))
             return self::$instance;
         }
 
+        /**
+        * Metodo que fuerza la recarga de los archivos de configuración.
+        */
         public function reload()
         {
             $this->loadConfig();
         }
 
+        /**
+         * Metodo mágico para acceder a un valor de la configuración con una sintaxis mas sencilla.
+         * @param string $name Clave del valor de la configuración que se quiere obtener.
+         */
         public function __get($name) {
             if (array_key_exists($name, $this->configuration)) {
                 return $this->configuration[$name];

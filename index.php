@@ -1,4 +1,8 @@
 <?php
+    /*
+     * Punto de entrada de la web. Todos las peticiones a la web pasan por aquí
+     */
+
     // Constante global para asegurar el paso por index
     define("PINCHOSFW", true);
 

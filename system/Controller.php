@@ -4,23 +4,38 @@ if (defined('PINCHOSFW'))
     require_once (SYSTEM_FOLDER . 'Configuration.php');
     require_once (SYSTEM_FOLDER . 'Template.php');
 
+    /**
+     * Clase abstracta a heredar por todos los controladores.
+     * Provee al controlador que lo herede de ciertas funcionalidades y metodos abreviados.
+     */
     abstract class Controller
     {
+        /** Instancia de la clase Configuration */
         protected $config;
-
+        /** Array de modelos instanciados */
         protected $models;
 
         function __construct() {
             $this->config = Configuration::getInstance();
         }
 
+        /**
+         * Metodo abreviado para cargar una plantilla desde el controlador.
+         * @param string $name Nombre de la plantilla a cargar.
+         * @param array $params Parametros que recibe la plantilla.
+         * @param bool $rethtml Indica si el codigo resultante se debe retornar como variable o debe ser escrito en el buffer de salida.
+         */
         protected function render ($name, $params = array(), $return = false) {
             $template = new Template($name);
             return $template->render($params, $return);
         }
 
+        /**
+        * Metodo para instanciar y guardar un modelo desde el controlador.
+        * @param string $name Nombre del modelo a cargar.
+        */
         protected function loadModel ($name) {
-            if (isset($this->models->$name)) {
+            if (isset($this->models[$name])) {
                 return TRUE;
             }
             else {

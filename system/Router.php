@@ -3,6 +3,9 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Configuration.php');
 
+    /**
+     * Enrutador MVC. Recibe las peticiones de la web y las encamina al controlador que le corresponde.
+     */
     class Router
     {
         private $config;
@@ -60,6 +63,9 @@ if (defined('PINCHOSFW'))
             }
         }
 
+        /**
+         * Metodo que ejecuta el controlador correspondiente a la ruta recibida.
+         */
         public function handle() {
             $controllername = ucfirst(strtolower($this->controller));
             $controllerfile = APP_FOLDER . "controllers/" . $controllername . '.php';

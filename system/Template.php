@@ -1,6 +1,9 @@
 <?php
 if (defined('PINCHOSFW'))
 {
+    /**
+     * Clase que representa una plantilla o template.
+     */
     class Template
     {
         private $viewfile;
@@ -16,6 +19,11 @@ if (defined('PINCHOSFW'))
             }
         }
 
+        /**
+         * Metodo que renderiza la plantilla.
+         * @param array $params Parametros que recibe la plantilla.
+         * @param bool $rethtml Indica si el codigo resultante se debe retornar como variable o debe ser escrito en el buffer de salida.
+         */
         public function render($params = array(), $rethtml = false) {
             if (!is_array($params)) {
                 trigger_error('La variable \$params debe ser de tipo array. Tipo recibido: (' . gettype($params) . ').', E_USER_WARNING);
