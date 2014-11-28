@@ -8,13 +8,13 @@ if (defined('PINCHOSFW'))
             // Ejemplo de carga de un modelo
             $this->loadModel('Users');
             // Ejemplo de usar una función de un modelo
-            $this->models->Users->getUser(0);
+            $this->models['Users']->getUser(0);
 
             // Ejemplo de renderizar una vista parcial (devuelve el codigo html)
             $parametros = Array();
-            $vistaparcial = $this->render('nombrevista', $parametros, true);
+            $vistaparcial = $this->render('Cabecera', $parametros, true);
             // Ejemplo de renderizar una vista completa (imprime en el navegador)
-            $this->render('nombrevista', $parametros);
+            $this->render('FormRegistro', $parametros);
         }
     };
 
