@@ -36,7 +36,7 @@ if (defined('PINCHOSFW'))
                 trigger_error('La variable \$params debe ser de tipo array. Tipo recibido: (' . gettype($params) . ').', E_USER_WARNING);
                 $params = array();
             }
-            
+
             $template = new Template($name);
             return $template->render(array_merge($params, array('user' => $this->user)), $return);
         }
@@ -50,9 +50,8 @@ if (defined('PINCHOSFW'))
                 return TRUE;
             }
             else {
-                $modelname = ucfirst(strtolower($name));
+                $modelname = 'Modelo' . ucfirst(strtolower($name));
                 $modelfile = APP_FOLDER . "models/" . $modelname . '.php';
-                $modelname = $modelname . 'Model';
 
                 if (file_exists($modelfile)) {
                     require_once($modelfile);

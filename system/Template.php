@@ -15,7 +15,7 @@ if (defined('PINCHOSFW'))
                 $this->viewfile = $vfile;
             }
             else {
-                trigger_error('No se ha encontrado la vista indicado en (' . $vfile . ')', E_USER_ERROR);
+                trigger_error('No se ha encontrado la vista indicada en (' . $vfile . ')', E_USER_ERROR);
             }
         }
 
