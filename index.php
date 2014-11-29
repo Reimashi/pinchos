@@ -16,6 +16,11 @@
     define ("SITE_URL", $httpprotocol . $_SERVER['HTTP_HOST'] .'/'. BASE_PATH);
     define ("RESOURCES_URL", SITE_URL . '/app/static/');
 
+    // Iniciamos la sesion PHP
+    if (!session_start()) {
+        trigger_error('Ha ocurrido un error al iniciar sesión. La aplicación no funcionará correctamente.', E_USER_ERROR);
+    }
+
     // Cargamos el router
     require_once (SYSTEM_FOLDER . 'Router.php');
     $router = new Router();
