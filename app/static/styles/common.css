@@ -41,61 +41,89 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+html, body {
+	height: 100%;
+}
 .clear-float { clear: both; }
 
 body {
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	background: #f2f2f2;
 }
 
-#head-container {
+#body-wrapper {
+	min-width: 660px;
+	min-height: 100%;
+	margin: 0px auto -50px auto;
+}
+
+a.button {
+	padding:5px 8px;
+	background-color:#599bb3;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	border-radius:8px;
+	text-decoration: none;
+	color: #fff;
+	cursor:pointer;
+}
+
+a.button:active {
+	position:relative;
+	top:1px;
+}
+
+header {
   width: 100%;
   min-width: 660px;
   background: #000;
   height: 70px;
 }
 
-#head-container #head-contw {
+header #head-contw {
   margin: 0px auto;
 }
 
-#head-container #head-title {
+header #head-title {
   float: left;
 }
 
-#head-container #head-title img {
+header #head-title img {
   margin: 4px;
   height: 60px;
 }
 
-#head-container #head-menu {
+header #head-menu {
   float: right;
 }
 
-#head-container #head-menu li {
+header #head-menu li {
   display: inline-block;
-  margin: 0px 12px;
+  margin: 0px 9px;
 }
 
-#head-container #head-menu li a {
+header #head-menu li a.menu-item {
   line-height: 70px;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 1.1em;
   text-decoration: none;
 }
 
-#head-container #head-menu li img {
-  height: 60px;
-  margin: 5px;
-}
-
-#head-container #head-menu li a:hover {
+header #head-menu li a.menu-item:hover {
   color: #990000;
 }
 
 #body-container {
-  background: #f2f2f2;
 }
 
-#foot-container {
-  background: #000;
+footer, .push {
+	height: 50px;
+}
+
+footer {
+	min-width: 660px;
+	width: 100%;
+  	background: #333;
+	text-align: center;
+	line-height: 50px;
+	color: #fff;
 }
