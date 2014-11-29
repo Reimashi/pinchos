@@ -18,13 +18,6 @@ if (defined('PINCHOSFW'))
             $this->info = (isset($_SESSION['user']['info'])) ? $_SESSION['user']['info'] : array();
         }
 
-        private function __destruct()
-        {
-            $_SESSION['user']['loguedin'] = $this->loguedin;
-            $_SESSION['user']['info'] = $this->info;
-            $_SESSION['user']['role'] = $this->role;
-        }
-
         /**
         * Metodo que permite obtener una instancia de la clase Configuration.
         */
@@ -71,7 +64,6 @@ if (defined('PINCHOSFW'))
             return ($role == $this->role);
         }
 
-
         /**
         * Metodo que inicia sesion en el sistema.
         * @param array Información del usuario.
@@ -97,6 +89,12 @@ if (defined('PINCHOSFW'))
         */
         public function get_info() {
             return $this->info;
+        }
+
+        public function save() {
+            $_SESSION['user']['loguedin'] = $this->loguedin;
+            $_SESSION['user']['info'] = $this->info;
+            $_SESSION['user']['role'] = $this->role;
         }
     };
 }
