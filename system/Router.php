@@ -53,6 +53,7 @@ if (defined('PINCHOSFW'))
 
                 // Establecemos los parametros
                 $this->params = (isset($_GET) && is_array($_GET)) ? $_GET : array();
+                $this->params['post'] = (isset($_POST) && is_array($_POST)) ? $_POST : array();
 
                 if (count($path) > 2) {
                     $this->params = array_merge($this->params, array_slice($path, 2));
