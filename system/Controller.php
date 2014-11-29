@@ -3,6 +3,7 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Configuration.php');
     require_once (SYSTEM_FOLDER . 'Template.php');
+    require_once (SYSTEM_FOLDER . 'User.php');
 
     /**
      * Clase abstracta a heredar por todos los controladores.
@@ -14,9 +15,12 @@ if (defined('PINCHOSFW'))
         protected $config;
         /** Array de modelos instanciados */
         protected $models;
+        /** Instancia de la clase User */
+        protected $user;
 
         function __construct() {
             $this->config = Configuration::getInstance();
+            $this->user = User::getInstance();
         }
 
         /**
@@ -26,8 +30,15 @@ if (defined('PINCHOSFW'))
          * @param bool $rethtml Indica si el codigo resultante se debe retornar como variable o debe ser escrito en el buffer de salida.
          */
         protected function render ($name, $params = array(), $return = false) {
+            $params = ($params == null) ? array() : $params;
+
+            if (!is_array($params)) {
+                trigger_error('La variable \$params debe ser de tipo array. Tipo recibido: (' . gettype($params) . ').', E_USER_WARNING);
+                $params = array();
+            }
+            
             $template = new Template($name);
-            return $template->render($params, $return);
+            return $template->render(array_merge($params, array('user' => $this->user)), $return);
         }
 
         /**
