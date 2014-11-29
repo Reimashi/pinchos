@@ -3,7 +3,7 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Controller.php');
 
-    class Init extends Controller {
+    class InitController extends Controller {
         public function index ($params) {
 
         }
