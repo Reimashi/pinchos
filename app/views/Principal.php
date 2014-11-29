@@ -2,9 +2,14 @@
 
 <html>
 <head>
-  <title>PinChos</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" href="<?php echo RESOURCES_URL ?>styles/common.css">
+    <title>PinChos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <?php if (isset($params['js']) && is_array($params['js'])) {
+        foreach ($params['js'] as $script) {
+            echo "<script src=\"$script\" type=\"text/javascript\"></script>";
+        }
+    } ?>
+    <link rel="stylesheet" href="<?php echo RESOURCES_URL ?>styles/common.css">
 </head>
 
 <body>
@@ -41,7 +46,13 @@
             <?php
                 if (isset($params['body-containers'])) {
                     foreach ($params['body-containers'] as $element) {
-                        echo $element;
+                        ?>
+                        <div class="body-element">
+                        <?php
+                            echo $element;
+                        ?>
+                        </div>
+                        <?php
                     }
                 }
                 else {
