@@ -8,7 +8,21 @@ if (defined('PINCHOSFW'))
         * Crea un usuario en la base de datos.
         */
         public function crearUsuario ($usuario) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+            if (isset($usuario['email']) && isset($usuario['password']) && isset($usuario['type'])) {
+                $querytuser = 'INSERT INTO usuario (email, password) VALUES (' . $usuario['email'] . ', ' . $usuario['password'] . ')';
+
+                if ($this->db->query($querytuser) === TRUE) {
+                    return TRUE;
+                }
+                else {
+                    trigger_error('No se ha podido crear el usuario en la base de datos (' . $this->db->errno . ').', E_USER_ERROR);
+                    return FALSE;
+                }
+            }
+            else {
+                trigger_error('El metodo ModeloUsuario->crearUsuario no ha recibido parametros suficientes.', E_USER_ERROR);
+                return FALSE;
+            }
         }
 
         /**

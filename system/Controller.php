@@ -47,7 +47,7 @@ if (defined('PINCHOSFW'))
         */
         protected function loadModel ($name) {
             if (isset($this->models[$name])) {
-                return TRUE;
+                return $this->models[$name];
             }
             else {
                 $modelname = 'Modelo' . ucfirst(strtolower($name));
@@ -60,7 +60,7 @@ if (defined('PINCHOSFW'))
                         is_subclass_of($modelname, 'Model'))
                     {
                         $this->models[$modelname] = new $modelname();
-                        return TRUE;
+                        return $this->models[$name];
                     }
                     else
                     {

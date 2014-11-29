@@ -15,13 +15,57 @@ if (defined('PINCHOSFW'))
          * Registra un nuevo usuario en el sistema.
          */
         public function registrarUsuario ($params) {
-            $configvista = array('body-containers' => array());
+            $configvistaprincipal = array(
+                'body-containers' => array()
+            );
 
-            if (!isset($params['form']) && $params['form'] = '') {
+            // Si ha recibido los valores de formulario en un post
+            if (isset($params['post']['form-name']) && $params['post']['form-name'] = 'user-registry')
+            {
+                $datosUsuario = array();
+
+                // Comprobamos si los valores recibidos del formulario son los esperados
+                // http://php.net/manual/en/filter.filters.validate.php
+                if (!filter_var($params['post']['email'], FILTER_VALIDATE_EMAIL)) {
+                    return $this->registrarUsuarioVerFormulario($configvistaprincipal, "El email no es válido");
+                }
+                else {
+                    $datosUsuario['email'] = $params['post']['email'];
+                }
+
+                if (strlen($params['post']['pass']) != 40) { // Tamaño de SHA1
+                    return $this->registrarUsuarioVerFormulario($configvistaprincipal, "La contraseña no es válida");
+                }
+                else {
+                    $datosUsuario['password'] = $params['post']['pass'];
+                }
+
+                // Cargamos el modelo de Usuario
+                $modeloUsuario = $this->loadModel('Usuario');
+
+                // Creamos el usuario en la base de datos
+                $modeloUsuario->crearUsuario($datosUsuario);
+
+                // Mostramos la vista de tarea completa
+                return $this->registrarUsuarioVerFormularioSuccess($configvistaprincipal);
             }
-            $this->render('FormularioRegistrar', null, true);
+            else {
+                return $this->registrarUsuarioVerFormulario($configvistaprincipal);
+            }
+        }
 
-            $this->render('Principal', $configvista);
+        private function registrarUsuarioVerFormulario($confprincipal, $error = false) {
+            $confprincipal['body-containers'][] = $this->render('Usuario/FormularioRegistrar', ($error) ? array('form-error' => $error) : null, true);
+            $confprincipal['js'] = array(
+                RESOURCES_URL . 'js/jquery-2.min.js',
+                RESOURCES_URL . 'js/UsuarioRegistrar.js'
+            );
+            $this->render('Principal', $confprincipal);
+        }
+
+        private function registrarUsuarioVerFormularioSuccess($confprincipal) {
+            $confprincipal['body-containers'][] = $this->render('Usuario/FormularioRegistrarSuccess', null, true);
+            $this->render('Principal', $confprincipal);
         }
 
         /**
