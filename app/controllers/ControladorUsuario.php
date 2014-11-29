@@ -5,6 +5,13 @@ if (defined('PINCHOSFW'))
 
     class ControladorUsuario extends Controller {
         /**
+        * Metodo por defecto del controlador.
+        */
+        public function index ($params) {
+            return obtenerUsuario($params);
+        }
+
+        /**
          * Registra un nuevo usuario en el sistema.
          */
         public function registrarUsuario ($params) {
