@@ -4,6 +4,6 @@
 
 $config = array();
 
-$config['default_controller'] = 'init';
+$config['default_controller'] = 'Inicio';
 
 ?>
