@@ -39,6 +39,13 @@ if (defined('PINCHOSFW'))
         public function obtenerLocalizaciones () {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
         }
+
+        /**
+         * Registra un array de codigos para un pincho en la base de datos.
+         */
+        public function registrarCodigos($idpincho, $codigos) {
+            trigger_error('Metodo no implementado.', E_USER_ERROR);
+        }
     };
 
 }

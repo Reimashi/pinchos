@@ -32,6 +32,13 @@ if (defined('PINCHOSFW'))
         private function denegarPincho ($params) {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
         }
+
+        /**
+        * Genera codigos de un pincho previamente registrado.
+        */
+        public function generarCodigos ($params) {
+            trigger_error('Metodo no implementado.', E_USER_ERROR);
+        }
     };
 
 }
