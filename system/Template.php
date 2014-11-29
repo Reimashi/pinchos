@@ -25,6 +25,8 @@ if (defined('PINCHOSFW'))
          * @param bool $rethtml Indica si el codigo resultante se debe retornar como variable o debe ser escrito en el buffer de salida.
          */
         public function render($params = array(), $rethtml = false) {
+            $params = ($params == null) ? array() : $params;
+
             if (!is_array($params)) {
                 trigger_error('La variable \$params debe ser de tipo array. Tipo recibido: (' . gettype($params) . ').', E_USER_WARNING);
                 $params = array();
