@@ -69,6 +69,7 @@ if (defined('PINCHOSFW'))
         public function handle() {
             $controllername = ucfirst(strtolower($this->controller));
             $controllerfile = APP_FOLDER . "controllers/" . $controllername . '.php';
+            $controllername = $controllername . 'Controller';
 
             if (file_exists($controllerfile)) {
                 require_once($controllerfile);

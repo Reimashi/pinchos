@@ -52,6 +52,7 @@ if (defined('PINCHOSFW'))
             else {
                 $modelname = ucfirst(strtolower($name));
                 $modelfile = APP_FOLDER . "models/" . $modelname . '.php';
+                $modelname = $modelname . 'Model';
 
                 if (file_exists($modelfile)) {
                     require_once($modelfile);
