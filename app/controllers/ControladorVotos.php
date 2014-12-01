@@ -16,6 +16,12 @@ if (defined('PINCHOSFW'))
         */
         public function emitirVotoPublico ($params) {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
+
+            
+
+
+
+
         }
 
         /**

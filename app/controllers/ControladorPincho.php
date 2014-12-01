@@ -36,8 +36,17 @@ if (defined('PINCHOSFW'))
         /**
         * Genera codigos de un pincho previamente registrado.
         */
-        public function generarCodigos ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+        public function generarCodigos ($longitud=10) {
+            codigo = "";
+            $caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            $max=strlen($caracteres)-1;
+            for($i=0;$i < $longitud;$i++)
+              {
+                $codigo.=$caracteres[mt_rand(0,$max)];
+              }
+
+            return $codigo;
+
         }
     };
 
