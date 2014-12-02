@@ -8,7 +8,13 @@ if (defined('PINCHOSFW'))
         * Consulta las bases de un concurso en la base de datos.
         */
         public function consultarBases ($idconcurso) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+
+            if(isset($idconcurso)){
+
+            $bases = this->db->query("SELECT bases FROM concursos WHERE id_concurso='$idconcurso'");
+
+            return $bases;
+          }
         }
     };
 

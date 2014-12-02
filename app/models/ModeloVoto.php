@@ -36,6 +36,10 @@ if (defined('PINCHOSFW'))
         */
         public function contarVotos ($idpincho) {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
+
+
+            
+
         }
     };
 

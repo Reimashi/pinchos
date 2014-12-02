@@ -9,7 +9,8 @@ if (defined('PINCHOSFW'))
         */
         public function index ($params) {
             return buscarInformacion($params);
-        }
+
+          }
 
         /**
         * Busca informacion a partir de un string en el sistema.
@@ -22,10 +23,12 @@ if (defined('PINCHOSFW'))
         * Muestra la agenda de un concurso.
         */
         public function obtenerAgenda ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
 
+          $validar = $params['post']['validado'];
 
-            
+          $modeloAgenda = $this->loadModel('Agenda');
+          $modeloAgenda->consultarAgenda($validar);
+
         }
 
         /**
@@ -39,7 +42,10 @@ if (defined('PINCHOSFW'))
         * Obtiene las bases de un concurso.
         */
         private function obtenerBases ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+          $validar = $params['post']['validado'];
+
+          $modeloconcurso = $this->loadModel('Bases');
+          $modeloConcurso->consultarBases($validar);
         }
 
         /**
