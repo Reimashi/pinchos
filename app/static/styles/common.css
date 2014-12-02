@@ -44,6 +44,9 @@ table {
 html, body {
 	height: 100%;
 }
+textarea:focus, input:focus{
+	outline: 0;
+}
 .clear-float { clear: both; }
 
 body {
@@ -57,17 +60,18 @@ body {
 	margin: 0px auto -50px auto;
 }
 
-a.button {
+input[type="submit"], button, a.button {
 	padding:5px 8px;
 	background-color:#599bb3;
 	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	border: 0px;
 	border-radius:8px;
 	text-decoration: none;
 	color: #fff;
 	cursor:pointer;
 }
 
-a.button:active {
+input[type="submit"]:active, button:active, a.button:active {
 	position:relative;
 	top:1px;
 }
@@ -113,6 +117,21 @@ header #head-menu li a.menu-item:hover {
 }
 
 #body-container {
+	padding: 12px 0px;
+}
+
+.body-element {
+	min-width: 660px;
+	max-width: 1200px;
+	display: block;
+	margin: 0px auto;
+}
+
+.body-element-cont {
+	margin: 0px auto;
+	background: #fff;
+	border: 3px solid #e7e7e7;
+	border-radius: 2px;
 }
 
 footer, .push {
@@ -126,4 +145,41 @@ footer {
 	text-align: center;
 	line-height: 50px;
 	color: #fff;
+}
+
+.form-element {
+	width: 480px;
+	margin: 12px auto;
+}
+
+.form-element .form-line {
+	margin: 3px auto;
+}
+
+.form-element .form-line-error {
+	display: hidden;
+	margin: 0px auto 12px;
+	text-align: center;
+	color: #f00;
+}
+
+.form-element .form-line .form-line-space {
+	height: 8px;
+}
+
+.form-element .form-line .form-line-input {
+	display: inline-block;
+	width: auto;
+}
+
+.form-line-input input[type="text"], .form-line-input input[type="password"] {
+	margin: 0;
+	padding: 3px;
+	border: 2px solid #ccc;
+	border-radius: 5px;
+}
+
+.form-line-input input[type="text"]:focus, .form-line-input input[type="password"]:focus {
+	border: 2px solid #bbf;
+	border-radius: 5px;
 }
