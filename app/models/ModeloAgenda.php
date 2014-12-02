@@ -8,7 +8,12 @@ if (defined('PINCHOSFW'))
         * Consulta la agenda de un concurso en la base de datos.
         */
         public function consultarAgenda ($idconcurso) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+          if(isset($idconcurso)){
+
+            $agenda = this->db->query("SELECT * FROM agenda WHERE id_concurso='$idconcurso'");
+
+            return $agenda;
+
         }
     };
 

@@ -16,6 +16,7 @@ if (defined('PINCHOSFW'))
         /**
         * Valida un pincho y lo registra en la base de datos.
         */
+        
         public function validarPincho ($idpincho) {
             if(isset($idpincho)){
                 this->db->query("UPDATE pinchos SET validado='1' WHERE id='$idpincho'");
@@ -39,7 +40,7 @@ if (defined('PINCHOSFW'))
         */
         public function existePincho ($idpincho) {
             if(isset($idpincho)){
-                $existe = this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");   
+                $existe = this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
                 if($existe == NULL){
                     return false;
                 }else{
