@@ -4,12 +4,20 @@
 <head>
     <title>PinChos</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="<?php echo RESOURCES_URL ?>js/common.js" type="text/javascript"></script>
     <?php if (isset($params['js']) && is_array($params['js'])) {
         foreach ($params['js'] as $script) {
             echo "<script src=\"$script\" type=\"text/javascript\"></script>";
         }
-    } ?>
+    }
+    ?>
     <link rel="stylesheet" href="<?php echo RESOURCES_URL ?>styles/common.css">
+    <?php
+    if (isset($params['css']) && is_array($params['css'])) {
+        foreach ($params['css'] as $resource) {
+            echo "<link rel=\"stylesheet\" href=\"$resource\">";
+        }
+    } ?>
 </head>
 
 <body>
