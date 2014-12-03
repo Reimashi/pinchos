@@ -26,9 +26,9 @@ if (defined('PINCHOSFW'))
 
           $modeloAgenda = $this->loadModel('Agenda');
           $modeloAgenda->consultarAgenda($validar);
-  
+          $this->render('FormularioBuscador', null);
 
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+            
         }
 
         /**
