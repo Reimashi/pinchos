@@ -9,8 +9,7 @@ if (defined('PINCHOSFW'))
         */
         public function index ($params) {
             return buscarInformacion($params);
-
-          }
+        }
 
         /**
         * Busca informacion a partir de un string en el sistema.
@@ -23,12 +22,7 @@ if (defined('PINCHOSFW'))
         * Muestra la agenda de un concurso.
         */
         public function obtenerAgenda ($params) {
-
-          $validar = $params['post']['validado'];
-
-          $modeloAgenda = $this->loadModel('Agenda');
-          $modeloAgenda->consultarAgenda($validar);
-
+            trigger_error('Metodo no implementado.', E_USER_ERROR);
         }
 
         /**
@@ -42,12 +36,14 @@ if (defined('PINCHOSFW'))
         * Obtiene las bases de un concurso.
         */
         private function obtenerBases ($params) {
+
           $validar = $params['post']['validado'];
 
           $modeloconcurso = $this->loadModel('Bases');
           $bases=$modeloConcurso->consultarBases($validar);
           //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
           $this->render('FormularioBuscador', $bases);
+
         }
 
         /**

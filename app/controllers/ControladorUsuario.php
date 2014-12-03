@@ -60,10 +60,16 @@ if (defined('PINCHOSFW'))
                 RESOURCES_URL . 'js/jquery-2.min.js',
                 RESOURCES_URL . 'js/UsuarioRegistrar.js'
             );
+            $confprincipal['css'] = array(
+                RESOURCES_URL . 'styles/Usuario.css'
+            );
             $this->render('Principal', $confprincipal);
         }
 
         private function registrarUsuarioVerFormularioSuccess($confprincipal) {
+            $confprincipal['css'] = array(
+                RESOURCES_URL . 'styles/Usuario.css'
+            );
             $confprincipal['body-containers'][] = $this->render('Usuario/FormularioRegistrarSuccess', null, true);
             $this->render('Principal', $confprincipal);
         }

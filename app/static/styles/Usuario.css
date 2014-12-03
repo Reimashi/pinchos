@@ -1,0 +1,61 @@
+
+ul.usertype-list {
+    margin: 0px auto;
+    text-align: center;
+}
+
+ul.usertype-list li {
+    display: inline-block;
+    float: center;
+}
+
+a.usertype-button {
+    display: inline-block;
+    width: 136px;
+    padding: 8px;
+    background: #eee;
+    border: 2px solid #ddd;
+    border-radius: 9px;
+    color: #888;
+    text-decoration: none;
+    text-align: center;
+}
+
+a.usertype-button img {
+    display: block;
+    margin: 0px auto;
+    height: 96px;
+}
+
+.body-element-regusuario {
+    width: 680px;
+}
+
+.buttons-element {
+    margin: 6px auto;
+}
+
+.body-element-regusuario h1 {
+    font-size: 1.3em;
+    color: #666;
+    line-height: 48px;
+    text-align: center;
+}
+
+.form-element .form-line .form-line-centered {
+    display: inline-block;
+    width: 480px;
+    text-align: center;
+}
+
+.form-element .form-line .form-line-title {
+    display: inline-block;
+    width: 188px;
+    text-align: right;
+    margin: 0px 6px;
+    color: #333;
+}
+
+.form-line-input input[type="text"], .form-line-input input[type="password"] {
+    width: 264px;
+}
