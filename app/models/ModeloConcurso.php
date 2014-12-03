@@ -17,7 +17,6 @@ if (defined('PINCHOSFW'))
           }
         }
     };
-
 }
 else
 {

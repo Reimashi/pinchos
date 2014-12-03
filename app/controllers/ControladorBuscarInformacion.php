@@ -45,12 +45,15 @@ if (defined('PINCHOSFW'))
           $validar = $params['post']['validado'];
 
           $modeloconcurso = $this->loadModel('Bases');
-          $modeloConcurso->consultarBases($validar);
+          $bases=$modeloConcurso->consultarBases($validar);
+          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
+          $this->render('FormularioBuscador', $bases);
         }
 
         /**
         * Obtiene la lista de premios de un concurso.
         */
+
         private function obtenerPremios ($params) {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
         }
