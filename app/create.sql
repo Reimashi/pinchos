@@ -31,6 +31,11 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`usuario` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
+INSERT INTO usuario VALUES ('1', 'javatojones@pinchos.es', 'organizador');
+INSERT INTO usuario VALUES ('2', 'cabmanolo@oumail.es', 'conc1');
+INSERT INTO usuario VALUES ('3', 'jorltapas@oumail.es', 'conc2');
+INSERT INTO usuario VALUES ('4', 'langui@exmail.es', 'vot1');
+INSERT INTO usuario VALUES ('5', 'pecador@pradera.es', 'vot2');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`usuario_participante`
@@ -49,6 +54,8 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`usuario_participante` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO usuario_participante VALUES ('2', 'Club de Caballeros Manolo', 'Rua Falsa, 567');
+INSERT INTO usuario_participante VALUES ('3', 'Tapas Chiquito', 'Rua do fistro, 56');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`usuario_jurado_popular`
@@ -66,6 +73,8 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`usuario_jurado_popular` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO usuario_jurado_popular VALUES ('4');
+INSERT INTO usuario_jurado_popular VALUES ('5');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`usuario_jurado_especialista`
@@ -85,6 +94,8 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`usuario_jurado_especialista` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO usuario_jurado_especialista VALUES ('6', 'Juan Manuel', 'Montilla Macarrón');
+INSERT INTO usuario_jurado_especialista VALUES ('7', 'Gregorio', 'Sánchez Fernández');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`usuario_organizador`
@@ -103,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`usuario_organizador` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO usuario_organizador VALUES ('1', 'Javier', 'Ibarra Ramos');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`concursos`
@@ -118,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`concursos` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+INSERT INTO concursos VALUES ('1', 'PinChos', NOW(), 'Concurso de pinchos.', '1.Pinchos genuinos. 2.Deben estar buenos');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`agenda`
@@ -147,6 +160,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`agenda` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO agenda VALUES ('1', '1', '1', 'Entrega de premios', 'Entrega de premios a los ganadores.', '2015-1-7 18:00:00', '2014-12-02 18:30:00');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`premios`
@@ -181,6 +195,8 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`premios` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO premios VALUES ('1', '1', '1', 'Mejor pincho', NULL, NULL);
+INSERT INTO premios VALUES ('2', '1', '1', 'Peor pincho', NULL, NULL);
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`pinchos`
@@ -193,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`pinchos` (
   `id_concurso` INT NOT NULL,
   `nombre` VARCHAR(32) NOT NULL,
   `descripcion` VARCHAR(512) NULL,
-  `validado` BIT NOT NULL DEFAULT 0,
+  `validado` ENUM('PENDING', 'DENEGATE', 'VALIDATE') NOT NULL DEFAULT 'PENDING',
   `validado_id_organizador` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_uparticiante_idx` (`id_participante` ASC),
@@ -216,6 +232,8 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`pinchos` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO pinchos VALUES ('1', '2', '1', 'Gambones al vapor', 'O Jamones al vapor. Es como llamamos a las amburguesas en Albany', 'VALIDATE', '1');
+INSERT INTO pinchos VALUES ('2', '3', '1', 'Yogurt del Froiz', 'Para nada los que venden en ese supermercado', 'PENDING', NULL);
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`codigos_pincho`
@@ -234,6 +252,17 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`codigos_pincho` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO codigos_pincho VALUES ('1HFGSH', '1');
+INSERT INTO codigos_pincho VALUES ('1SGFGG', '1');
+INSERT INTO codigos_pincho VALUES ('1WUEHF', '1');
+INSERT INTO codigos_pincho VALUES ('1WEHRD', '1');
+INSERT INTO codigos_pincho VALUES ('1SEFGD', '1');
+INSERT INTO codigos_pincho VALUES ('1HAARF', '1');
+INSERT INTO codigos_pincho VALUES ('1ESRSG', '1');
+INSERT INTO codigos_pincho VALUES ('1GDHFR', '1');
+INSERT INTO codigos_pincho VALUES ('1WRTDF', '1');
+INSERT INTO codigos_pincho VALUES ('1HZZGR', '1');
+INSERT INTO codigos_pincho VALUES ('1DGDRG', '1');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`votos_populares`
@@ -259,6 +288,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`votos_populares` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO votos_populares VALUES ('1', '4', '1HFGSH');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`votos_profesionales`
@@ -283,6 +313,7 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`votos_profesionales` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+INSERT INTO votos_profesionales VALUES ('6', '1', '7');
 
 -- -----------------------------------------------------
 -- Table `pinchosdb`.`codigos_votados`
@@ -305,6 +336,9 @@ CREATE TABLE IF NOT EXISTS `pinchosdb`.`codigos_votados` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+INSERT INTO codigos_votados VALUES ('1', '1');
+
 
 SET SQL_MODE = '';
 GRANT USAGE ON *.* TO testuser;
