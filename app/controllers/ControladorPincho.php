@@ -2,7 +2,7 @@
 if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Controller.php');
-
+    
     class ControladorPincho extends Controller {
         /**
         * Metodo por defecto del controlador.
@@ -15,38 +15,87 @@ if (defined('PINCHOSFW'))
         * Registra un nuevo pincho en el sistema.
         */
         private function registrarPincho ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+            $configvistaprincipal = array(
+                'body-containers' => array()
+            );
+
+            if(isset($params['post']['form-name']) && $params['post']['form-name'] = 'pincho-registry'){
+
+                $datosPincho = array();
+
+                $datosPincho['nombre'] = $params['post']['nombre'];
+                $datosPincho['descripcion'] = $params['post']['descripcion'];
+
+                $modeloPincho = $this->loadModel('Pinchos');
+                $modeloPincho->registrarPincho($datosPincho);
+
+                return $this->registrarPinchoVerFormularioSuccess($configvistaprincipal);
+            
+            }else{
+
+                return $this->registrarPinchoVerFormulario($configvistaprincipal);
+
+            }
         }
 
         /**
         * Valida un pincho previamente registrado.
         */
         public function validarPincho ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+            
+            if(isset($params['post']['form-name']) && $params['post']['form-name'] == "pincho-validate"){
+                $idpincho = $params['post']['id'];
+                
+                if(isset($params['post']['validar'])){
+                    $validar = $params['post']['validar'];
+    
+                    $modeloPincho = $this->loadModel('Pincho');
+                    $modeloPincho->validarPincho($validar, $idpincho);
+                }else{
+                    if(isset($params['post']['denegar'])){
+                        $denegar = $params['post']['denegar'];
+    
+                        $modeloPincho = $this->loadModel('Pincho');
+                        $modeloPincho->validarPincho($denegar, $idpincho);
+                    }else{
+                         trigger_error('Operacion no realizada', E_USER_ERROR);
+                    }
+                }
+            }
         }
 
-        /**
-        * Valida negativamente un pincho previamente registrado.
-        * FIXME: Aitor: Yo diria que sobra. En validarPincho se puede hacer todo.
-        */
-        private function denegarPincho ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
-        }
 
         /**
         * Genera codigos de un pincho previamente registrado.
         */
-        public function generarCodigos ($longitud=10) {
-            codigo = "";
-            $caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            $max=strlen($caracteres)-1;
-            for($i=0;$i < $longitud;$i++)
-              {
-                $codigo.=$caracteres[mt_rand(0,$max)];
-              }
+        public function generarCodigos ($idpincho, $cantidad) {
+            $arCodigos = array();
+                for($j=0;$j < $cantidad; $j++){
+                    $longitud=5;
+                    /*
+                     * crear funcion en el modelo para obtener id del participante
+                     * $codigo = this->db->query("SELECT pa.id FROM pinchos AS p, participante AS pa WHERE p.id_participante=pa.id AND p.id='$idpincho'");
+                    */
+                    $caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    $max=strlen($caracteres)-1;
+                    for($i=0;$i < $longitud;$i++)
+                      {
+                        $codigo.=$caracteres[mt_rand(0,$max)];
+                      }
+                      $arCodigos = arrayPush($codigo);
+                }
+            return $arCodigos;
 
-            return $codigo;
+        }
 
+        public function registrarPinchoVerFormulario($configvistaprincipal){
+            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPincho', ($error) ? array('form-error' => $error) : null, true);
+            $this->render('Principal', $configvistaprincipal);
+        }
+
+        public function registrarPinchoVerFormularioSucces($configvistaprincipal){
+            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPinchoSuccess', null, true);
+            $this->render('Principal', $configvistaprincipal);
         }
     };
 
