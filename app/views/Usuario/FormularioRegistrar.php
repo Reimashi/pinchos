@@ -1,17 +1,9 @@
-<?php
-    $showsumenu = false;
-    if (isset($param['user']) && !$param['user']->is_role('jurado-popular')) {
-        $showmenu = true;
-    }
-?>
-
 <div class="body-element-cont body-element-regusuario">
 <form name="user-registry" action="index.php/usuario/registrarUsuario" method="POST">
     <input type="hidden" name="form-name" value="user-registry">
-    <input type="hidden" name="user-type" <?php if(!$showsumenu) { echo 'value=utype_popul'; } ?>>
+    <input type="hidden" name="user-type">
     <input type="hidden" name="password-encrypted">
 
-    <?php if($showsumenu) { ?>
     <div id="urf_select_user" class="buttons-element">
         <h1>Elija que tipo de usuario crear</h1>
         <ul class="usertype-list">
@@ -28,8 +20,8 @@
         </ul>
         <div class="clear-float"></div>
     </div>
-    <?php } ?>
-    <div id="urf_insert_data" class="form-element" <?php if($showsumenu) { echo 'style="display:none;"'; } ?>>
+
+    <div id="urf_insert_data" class="form-element" style="display:none;">
         <h1>Introduzca los datos de registro</h1>
         <div class="form-line">
             <span class="form-line-space">&nbsp;</span>
@@ -52,13 +44,21 @@
         <div class="form-line">
             <span class="form-line-space">&nbsp;</span>
         </div>
-        <div class="form-line">
+        <div class="form-line orgjur-info" style="display: none;">
             <span class="form-line-title">Nombre</span>
             <span class="form-line-input"><input type="text" name="firstname"/></span>
         </div>
-        <div class="form-line">
+        <div class="form-line orgjur-info" style="display: none;">
             <span class="form-line-title">Apellidos</span>
             <span class="form-line-input"><input type="text" name="lastname"/></span>
+        </div>
+        <div class="form-line part-info" style="display: none;">
+            <span class="form-line-title">Nombre del local</span>
+            <span class="form-line-input"><input type="text" name="localname"/></span>
+        </div>
+        <div class="form-line part-info" style="display: none;">
+            <span class="form-line-title">Dirección del local</span>
+            <span class="form-line-input"><textarea form="user-registry" name="localaddr"></textarea></span>
         </div>
         <div class="form-line">
             <span class="form-line-space">&nbsp;</span>

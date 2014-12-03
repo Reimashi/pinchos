@@ -4,12 +4,14 @@ $(document).ready(function () {
         $("input[name='user-type']").val( $(this).attr('id') );
         $("#urf_select_user").slideUp();
         $("#urf_insert_data").slideDown();
-    });
 
-    $("a#urf_show_select_user").click(function() {
-        $("input[name='user-type']").val('');
-        $("#urf_select_user").slideDown();
-        $("#urf_insert_data").slideUp();
+        var usertype = $("input[name='user-type']").val();
+        if (usertype == 'utype_profe' || usertype == 'utype_organ') {
+            $('.orgjur-info').show();
+        }
+        else if (usertype == 'utype_parti') {
+            $('.part-info').show();
+        }
     });
 
     $("form[name='user-registry'] input").focus(function() {
@@ -20,19 +22,30 @@ $(document).ready(function () {
         var forminstance = $("form[name='user-registry']");
 
         if (!validateEmail(forminstance.find('input[name="username"]').val())) {
-            forminstance.find('.form-line-error').html('El email no es válido.').fadeIn();
+            forminstance.find('.form-line-error').html('El <br>email</br> no es válido.').fadeIn();
             return false;
         }
 
         var usertype = $("input[name='user-type']").val();
-        if (usertype == 'utype_parti' || usertype == 'utype_organ') {
+        if (usertype == 'utype_profe' || usertype == 'utype_organ') {
             if (stringEmpty(forminstance.find('input[name="firstname"]').val())) {
-                forminstance.find('.form-line-error').html('Debe introducir un Nombre correcto.').fadeIn();
+                forminstance.find('.form-line-error').html('Debe introducir un <br>nombre</br> correcto.').fadeIn();
                 return false;
             }
 
             if (stringEmpty(forminstance.find('input[name="lastname"]').val())) {
-                forminstance.find('.form-line-error').html('Debe introducir unos Apellidos correctos.').fadeIn();
+                forminstance.find('.form-line-error').html('Debe introducir unos <br>apellidos</br> correctos.').fadeIn();
+                return false;
+            }
+        }
+        else if (usertype == 'utype_parti') {
+            if (stringEmpty(forminstance.find('input[name="localname"]').val())) {
+                forminstance.find('.form-line-error').html('Debe introducir un <br>nombre de local</br> correcto.').fadeIn();
+                return false;
+            }
+
+            if (stringEmpty(forminstance.find('input[name="localaddr"]').val())) {
+                forminstance.find('.form-line-error').html('Debe introducir una <br>dirección</br> para el local.').fadeIn();
                 return false;
             }
         }
@@ -46,6 +59,11 @@ $(document).ready(function () {
         } else if (pass1 != pass2) {
             forminstance.find('.form-line-error').html('Ambas contraseñas deben coincidir.').fadeIn();
             return false;
+        }
+        else {
+            $("input[name='password']").val('');
+            $("input[name='password-repeat']").val('');
+            $("input[name='password-encripted']").val(CryptoJS.SHA1(pass1));
         }
 
         forminstance.find('.form-line-error').fadeOut();

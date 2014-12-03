@@ -58,6 +58,7 @@ if (defined('PINCHOSFW'))
             $confprincipal['body-containers'][] = $this->render('Usuario/FormularioRegistrar', ($error) ? array('form-error' => $error) : null, true);
             $confprincipal['js'] = array(
                 RESOURCES_URL . 'js/jquery-2.min.js',
+                RESOURCES_URL . 'js/sha1.js',
                 RESOURCES_URL . 'js/UsuarioRegistrar.js'
             );
             $confprincipal['css'] = array(

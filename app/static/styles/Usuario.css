@@ -52,10 +52,11 @@ a.usertype-button img {
     display: inline-block;
     width: 188px;
     text-align: right;
+    vertical-align: middle;
     margin: 0px 6px;
     color: #333;
 }
 
-.form-line-input input[type="text"], .form-line-input input[type="password"] {
+.form-line-input input[type="text"], .form-line-input input[type="password"], textarea {
     width: 264px;
 }

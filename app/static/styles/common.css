@@ -172,14 +172,14 @@ footer {
 	width: auto;
 }
 
-.form-line-input input[type="text"], .form-line-input input[type="password"] {
+.form-line-input input[type="text"], .form-line-input input[type="password"], textarea {
 	margin: 0;
 	padding: 3px;
 	border: 2px solid #ccc;
 	border-radius: 5px;
 }
 
-.form-line-input input[type="text"]:focus, .form-line-input input[type="password"]:focus {
+.form-line-input input[type="text"]:focus, .form-line-input input[type="password"]:focus, textarea:focus {
 	border: 2px solid #bbf;
 	border-radius: 5px;
 }
