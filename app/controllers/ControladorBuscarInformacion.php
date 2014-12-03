@@ -22,6 +22,12 @@ if (defined('PINCHOSFW'))
         * Muestra la agenda de un concurso.
         */
         public function obtenerAgenda ($params) {
+          $validar = $params['post']['validado'];
+
+          $modeloAgenda = $this->loadModel('Agenda');
+          $modeloAgenda->consultarAgenda($validar);
+  
+
             trigger_error('Metodo no implementado.', E_USER_ERROR);
         }
 

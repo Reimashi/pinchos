@@ -10,14 +10,23 @@ if (defined('PINCHOSFW'))
         public function registrarVoto ($voto) {
             trigger_error('Metodo no implementado.', E_USER_ERROR);
             if (isset($voto['codigo'])) {
-              $querytuser ='INSERT INTO votos_populares(id,id_jurado,id_codigo_ganador) VALUES (' . $voto['codigo'] . ')';
+              $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo1'] . ')';
               if ($this->db->query($querytuser) === TRUE) {
-                return TRUE;
-              }
-              else {
-                trigger_error('No se ha podido emitir el voto (' . $this->db->errno . ').', E_USER_ERROR);
-                return FALSE;
-              }
+                $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo2'] . ')';
+                if ($this->db->query($querytuser) === TRUE) {
+                  $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo3'] . ')';
+                  if ($this->db->query($querytuser) === TRUE) {
+                    return TRUE;
+                  }
+                  else {
+                    trigger_error('No se ha podido emitir el voto (' . $this->db->errno . ').', E_USER_ERROR);
+                    return FALSE;
+                  }
+                }
+                else {
+                  trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
+                  return FALSE;
+                }
             }
             else {
               trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
