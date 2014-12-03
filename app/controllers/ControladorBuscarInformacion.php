@@ -15,27 +15,54 @@ if (defined('PINCHOSFW'))
         * Busca informacion a partir de un string en el sistema.
         */
         public function buscarInformacion ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
-        }
+          if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'buscador') {
+
+            if($params['post']['tipo_busqueda'] == 'Agenda')
+            {
+              $this->obtenerAgenda($params);
+            }
+            if($params['post']['form-name'] == 'Bases')
+            {
+              $this->render('PaginaBases', null);
+            }
+            if($params['post']['form-name'] == 'Localizacion')
+            {
+              $this->render('PaginaLocalizaciones', null);
+            }
+            if($params['post']['form-name'] == 'Premios')
+            {
+              $this->render('PaginaPremios', null);
+            }
+          }
+          else {
+            // Imprimes formulario
+            $htmlform = $this->render('BuscarInformacion/FormularioBuscador', null, true);
+            $this->render('Principal', array('body-containers' => array($htmlform)));
+          }        }
 
         /**
         * Muestra la agenda de un concurso.
         */
         public function obtenerAgenda ($params) {
-          $validar = $params['post']['validado'];
-
           $modeloAgenda = $this->loadModel('Agenda');
           $modeloAgenda->consultarAgenda($validar);
-          $this->render('FormularioBuscador', null);
 
-            
+          $htmlform = $this->render('BuscarInformacion/PaginaAgenda', null, true);
+          $this->render('Principal', array('body-containers' => array($htmlform)));
+
         }
 
         /**
         * Obtiene las localizaciones de los pinchos de un concurso.
         */
         public function obtenerLocalizaciones ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+
+          $validar = $params['post']['validado'];
+
+          $modeloconcurso = $this->loadModel('Localizaciones');
+          $localizaciones=$modeloConcurso->consultarLocalizaciones($validar);
+          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
+          $this->render('FormularioBuscador', $localizaciones);
         }
 
         /**
@@ -57,7 +84,12 @@ if (defined('PINCHOSFW'))
         */
 
         private function obtenerPremios ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+          $validar = $params['post']['validado'];
+
+          $modeloconcurso = $this->loadModel('Premios');
+          $premios=$modeloConcurso->consultarPremios($validar);
+          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
+          $this->render('FormularioBuscador', $premios);
         }
     };
 
