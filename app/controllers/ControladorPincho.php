@@ -8,13 +8,14 @@ if (defined('PINCHOSFW'))
         * Metodo por defecto del controlador.
         */
         public function index ($params) {
+
             header("HTTP/1.0 404 Not Found");
         }
 
         /**
         * Registra un nuevo pincho en el sistema.
         */
-        private function registrarPincho ($params) {
+        public function registrarPincho ($params) {
             $configvistaprincipal = array(
                 'body-containers' => array()
             );
@@ -23,13 +24,13 @@ if (defined('PINCHOSFW'))
 
                 $datosPincho = array();
 
-                $datosPincho['nombre'] = $params['post']['nombre'];
+                $datosPincho['nombre'] = $params['post']['form-name'];
                 $datosPincho['descripcion'] = $params['post']['descripcion'];
 
                 $modeloPincho = $this->loadModel('Pinchos');
                 $modeloPincho->registrarPincho($datosPincho);
 
-                return $this->registrarPinchoVerFormularioSuccess($configvistaprincipal);
+                return $this->registrarPinchoVerFormularioSucces($configvistaprincipal);
             
             }else{
 
@@ -74,7 +75,7 @@ if (defined('PINCHOSFW'))
                     $longitud=5;
                     /*
                      * crear funcion en el modelo para obtener id del participante
-                     * $codigo = this->db->query("SELECT pa.id FROM pinchos AS p, participante AS pa WHERE p.id_participante=pa.id AND p.id='$idpincho'");
+                     * $codigo = $this->db->query("SELECT pa.id FROM pinchos AS p, participante AS pa WHERE p.id_participante=pa.id AND p.id='$idpincho'");
                     */
                     $caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                     $max=strlen($caracteres)-1;
@@ -82,19 +83,25 @@ if (defined('PINCHOSFW'))
                       {
                         $codigo.=$caracteres[mt_rand(0,$max)];
                       }
-                      $arCodigos = arrayPush($codigo);
+                      $arCodigos = array_push($codigo);
                 }
             return $arCodigos;
 
         }
 
-        public function registrarPinchoVerFormulario($configvistaprincipal){
+        public function registrarPinchoVerFormulario($configvistaprincipal, $error=false){
             $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPincho', ($error) ? array('form-error' => $error) : null, true);
+            $configvistaprincipal['css'] = array(
+                RESOURCES_URL . 'styles/Pinchos.css'
+            );
             $this->render('Principal', $configvistaprincipal);
         }
 
         public function registrarPinchoVerFormularioSucces($configvistaprincipal){
             $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPinchoSuccess', null, true);
+            $configvistaprincipal['css'] = array(
+                RESOURCES_URL . 'styles/Pinchos.css'
+            );
             $this->render('Principal', $configvistaprincipal);
         }
     };

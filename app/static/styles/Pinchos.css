@@ -1,0 +1,27 @@
+
+div.usertype-list {
+    margin: 0px auto;
+    text-align: center;
+}
+
+div.usertype-list li {
+    display: inline-block;
+    float: center;
+}
+
+p.usertype-button {
+    display: inline-block;
+    width: 300px;
+    padding: 8px;
+    background: #eee;
+    border: 2px solid #ddd;
+    border-radius: 9px;
+    color: #888;
+    text-decoration: none;
+    text-align: center;
+}
+
+.area {
+	width: 265px;
+	margin-bottom: 5px;
+}
