@@ -62,14 +62,26 @@ if (defined('PINCHOSFW'))
         }
 
         /**
+         * Metodo que consulta el rol del usuario actual.
+         */
+        public function get_role() {
+            return $_SESSION['user']['role'];
+        }
+
+        /**
         * Metodo que inicia sesion en el sistema.
         * @param array Información del usuario.
         * @param string Nombre del rol del usuario.
         */
         public function login($userinfo, $role) {
-            $_SESSION['user']['loguedin'] = true;
-            $_SESSION['user']['info'] = $userinfo;
-            $_SESSION['user']['role'] = $role;
+            if (is_string($role) && trim($role) != '') {
+                $_SESSION['user']['loguedin'] = true;
+                $_SESSION['user']['info'] = $userinfo;
+                $_SESSION['user']['role'] = $role;
+            }
+            else {
+                trigger_error('Se debe especificar un rol para iniciar sesión.', E_USER_ERROR);
+            }
         }
 
         /**
