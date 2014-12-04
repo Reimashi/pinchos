@@ -31,11 +31,15 @@ a.usertype-button img {
     width: 680px;
 }
 
+.body-element-logusuario {
+    width: 500px;
+}
+
 .buttons-element {
     margin: 6px auto;
 }
 
-.body-element-regusuario h1 {
+.body-element-regusuario h1, .body-element-logusuario h1 {
     font-size: 1.3em;
     color: #666;
     line-height: 48px;
@@ -59,4 +63,9 @@ a.usertype-button img {
 
 .form-line-input input[type="text"], .form-line-input input[type="password"], textarea {
     width: 264px;
+}
+
+#recup-pass {
+    margin: 0px 12px;
+    font-size: 0.8em;
 }
