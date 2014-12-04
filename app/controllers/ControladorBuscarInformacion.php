@@ -44,12 +44,17 @@ if (defined('PINCHOSFW'))
         * Muestra la agenda de un concurso.
         */
         public function obtenerAgenda ($params) {
-          $modeloAgenda = $this->loadModel('Agenda');
-          $modeloAgenda->consultarAgenda($validar);
+            $modeloAgenda = $this->loadModel('Agenda');
+            $datosAgenda = $modeloAgenda->consultarAgenda($validar); // Que es validar?
 
-          $htmlform = $this->render('BuscarInformacion/PaginaAgenda', null, true);
-          $this->render('Principal', array('body-containers' => array($htmlform)));
-
+            if ($datosAgenda) {
+                $htmlform['body-containers'] = array();
+                $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaAgenda', $datosAgenda, true);
+                $this->render('Principal', $htmlform);
+            }
+            else {
+                // Error por pantalla, no se pudo cargar la agenda
+            }
         }
 
         /**
@@ -75,7 +80,7 @@ if (defined('PINCHOSFW'))
 
           $htmlform = $this->render('BuscarInformacion/PaginaBases', null, true);
           $this->render('Principal', array('body-containers' => array($htmlform)));
-          
+
 
         }
 
