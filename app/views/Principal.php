@@ -29,19 +29,19 @@
                 </div>
                 <div id="head-menu">
                     <ul>
-                        <li><a href="#" class="menu-item">Inicio</a></li>
-                        <li><a href="#" class="menu-item">Participantes</a></li>
-                        <li><a href="#" class="menu-item">Bases</a></li>
-                        <li><a href="#" class="menu-item">Agenda</a></li>
+                        <li><a href="<?php echo SITE_URL . '/index.php' ?>" class="menu-item">Inicio</a></li>
+                        <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerLocalizaciones' ?>" class="menu-item">Participantes</a></li>
+                        <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerBases' ?>" class="menu-item">Bases</a></li>
+                        <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerAgenda' ?>" class="menu-item">Agenda</a></li>
                         <?php
                         if (isset($params['user']) && $params['user']->loguedin()) {
                             ?>
-                            <li><a href="#" class="button button-blue">Cerrar sesión</a></li>
+                            <li><a href="<?php echo SITE_URL . '/index.php/autenticacion/salirUsuario' ?>" class="button button-blue">Cerrar sesión</a></li>
                             <?php
                         }
-                        else {
+                        else if (!(isset($params['nologuedin']) && $params['nologuedin'])) {
                             ?>
-                            <li><a href="#" class="button button-blue">Iniciar sesión</a></li>
+                            <li><a href="<?php echo SITE_URL . '/index.php/autenticacion/autenticarUsuario' ?>" class="button button-blue">Iniciar sesión</a></li>
                             <?php
                         }
                         ?>
@@ -71,7 +71,7 @@
         <div class="push"></div>
     </div>
     <footer>
-        Copyright
+        <a href="https://github.com/Reimashi/pinchos">PinChos Framework</a> - ABP 2014
     </footer>
 </body>
 </html>

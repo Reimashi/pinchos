@@ -47,6 +47,9 @@ html, body {
 textarea:focus, input:focus{
 	outline: 0;
 }
+strong {
+	font-weight: bold;
+}
 .clear-float { clear: both; }
 
 body {
@@ -147,6 +150,11 @@ footer {
 	color: #fff;
 }
 
+footer a {
+	text-decoration: none;
+	color: #bbf;
+}
+
 .form-element {
 	width: 480px;
 	margin: 12px auto;
@@ -157,7 +165,6 @@ footer {
 }
 
 .form-element .form-line-error {
-	display: hidden;
 	margin: 0px auto 12px;
 	text-align: center;
 	color: #f00;
