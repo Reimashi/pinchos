@@ -39,7 +39,7 @@ if (defined('PINCHOSFW'))
         */
         public function existePincho ($idpincho) {
             if(isset($idpincho)){
-                $existe = this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");   
+                $existe = this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
                 if($existe == NULL){
                     return false;
                 }else{
@@ -53,13 +53,35 @@ if (defined('PINCHOSFW'))
         * FIXME: Creo que se le debe pasar el id de concurso, comprobadlo.
         */
         public function obtenerLocalizaciones () {
+          /*
             $localizaciones = array();
             $sql = this->db->query("SELECT usuario_participante.direccion FROM pinchos, usuario_participante WHERE pinchos.validado='1' AND pinchos.id_participante=usuario_participante.id");
             while($row = fetch_array($sql)){
                 $localizaciones[]=$row[];
             }
             return $localizaciones;
+
+            */
+
+            $qresult = $this->db->query("SELECT usuario_participante.direccion FROM pinchos, usuario_participante WHERE pinchos.validado='1' AND pinchos.id_participante=usuario_participante.id");
+
+            if ($qresult && $qresult->num_rows > 0) {
+              $localizaciones = array();
+
+              // Se recorren las filas encontradas en la base de datos
+              while ($entradalocalizaciones = $qresult->fetch_assoc()) {
+                $localizaciones[] = $entradalocalizaciones;
+              }
+
+              return $localizaciones;
+            }
+            else {
+              return FALSE;
+            }
+
+
         }
+
 
         /**
          * Registra un array de codigos para un pincho en la base de datos.

@@ -47,7 +47,7 @@ if (defined('PINCHOSFW'))
             $modeloAgenda = $this->loadModel('Agenda');
             $datosAgenda = $modeloAgenda->consultarAgenda($validar); // Que es validar?
 
-            if ($datosAgenda) {
+            if ($datosAgenda != null) {
                 $htmlform['body-containers'] = array();
                 $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaAgenda', $datosAgenda, true);
                 $this->render('Principal', $htmlform);
@@ -62,12 +62,19 @@ if (defined('PINCHOSFW'))
         */
         public function obtenerLocalizaciones ($params) {
 
-          $modeloLocalizaciones = $this->loadModel('Localizaciones');
-          $modeloLocalizaciones->consultarAgenda($validar);
+          $modeloPinchos = $this->loadModel('Pinchos');
+          $datosPinchos = $modeloPinchos->obtenerLocalizaciones($validar); // Que es validar?
 
-          $htmlform = $this->render('BuscarInformacion/PaginaLocalizaciones', null, true);
-          $this->render('Principal', array('body-containers' => array($htmlform)));
+          if ($datosPinchos != null) {
 
+            $htmlform['body-containers'] = array();
+            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaLocalizaciones', $datosPinchos, true);
+            $this->render('Principal', $htmlform);
+
+          }
+          else {
+            // Error por pantalla, no se pudo cargar la agenda
+          }
         }
 
         /**
@@ -75,12 +82,19 @@ if (defined('PINCHOSFW'))
         */
         private function obtenerBases ($params) {
 
-          $modeloBases = $this->loadModel('Bases');
-          $modeloBases->consultarAgenda($validar);
+          $modeloConcurso = $this->loadModel('Concurso');
+          $datosConcurso = $modeloConcurso->consultarBases($validar); // Que es validar?
 
-          $htmlform = $this->render('BuscarInformacion/PaginaBases', null, true);
-          $this->render('Principal', array('body-containers' => array($htmlform)));
+          if ($datosConcurso != null) {
 
+            $htmlform['body-containers'] = array();
+            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaBases', $datosConcurso, true);
+            $this->render('Principal', $htmlform);
+
+          }
+          else {
+            // Error por pantalla, no se pudo cargar la agenda
+          }
 
         }
 

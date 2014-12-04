@@ -8,16 +8,43 @@ if (defined('PINCHOSFW'))
     * Consulta las bases de un concurso en la base de datos.
     */
     public function consultarBases ($idconcurso) {
-      if(isset($idconcurso)){
 
-        $bases = this->db->query("SELECT bases FROM concursos WHERE id_concurso='$idconcurso'");
+      $qresult = $this->db->query("SELECT bases FROM concursos WHERE id=1");
+
+      if ($qresult && $qresult->num_rows > 0) {
+        $bases = array();
+
+        // Se recorren las filas encontradas en la base de datos
+        while ($entradabases = $qresult->fetch_assoc()) {
+          $bases[] = $entradabases;
+        }
 
         return $bases;
+      }
+      else {
+        return FALSE;
       }
 
 
 
-      trigger_error('Metodo no implementado.', E_USER_ERROR);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
   };
 }
