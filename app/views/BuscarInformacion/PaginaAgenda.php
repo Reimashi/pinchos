@@ -1,1 +1,1 @@
-<?php var_dump ($params); ?>
+<?php print_r($params); ?>
