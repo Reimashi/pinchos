@@ -11,7 +11,7 @@ if (defined('PINCHOSFW'))
         protected $db;
 
         function __construct() {
-            $db = Database::getDatabase();
+            $this->db = Database::getDatabase();
         }
     };
 
