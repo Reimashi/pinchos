@@ -184,6 +184,7 @@ footer a {
 	padding: 3px;
 	border: 2px solid #ccc;
 	border-radius: 5px;
+	text-align: center;
 }
 
 .form-line-input input[type="text"]:focus, .form-line-input input[type="password"]:focus, textarea:focus {

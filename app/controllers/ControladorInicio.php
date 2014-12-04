@@ -5,7 +5,9 @@ if (defined('PINCHOSFW'))
 
     class ControladorInicio extends Controller {
         public function index ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+            $configvistaprincipal['css'] = array( RESOURCES_URL . 'styles/Usuario.css' );
+            $configvistaprincipal['body-containers'][] = $this->render('Usuario/FormularioRegistrarSuccess', null, true);
+            $this->render('Principal', $configvistaprincipal);
         }
     };
 

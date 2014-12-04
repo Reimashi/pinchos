@@ -35,11 +35,15 @@ a.usertype-button img {
     width: 500px;
 }
 
+.body-element-regusuariosuc {
+    width: 380px;
+}
+
 .buttons-element {
     margin: 6px auto;
 }
 
-.body-element-regusuario h1, .body-element-logusuario h1 {
+.body-element-cont h1 {
     font-size: 1.3em;
     color: #666;
     line-height: 48px;
@@ -50,6 +54,10 @@ a.usertype-button img {
     display: inline-block;
     width: 480px;
     text-align: center;
+}
+
+.body-element-regusuariosuc .form-element {
+    width: 380px;
 }
 
 .form-element .form-line .form-line-title {
