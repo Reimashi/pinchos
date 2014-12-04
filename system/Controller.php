@@ -59,7 +59,7 @@ if (defined('PINCHOSFW'))
                     if (class_exists($modelname) &&
                         is_subclass_of($modelname, 'Model'))
                     {
-                        $this->models[$modelname] = new $modelname();
+                        $this->models[$name] = new $modelname();
                         return $this->models[$name];
                     }
                     else
