@@ -26,7 +26,4 @@
     require_once (SYSTEM_FOLDER . 'Router.php');
     $router = new Router();
     $router->handle();
-
-    // Forzamos el guardado del usuario en session
-    User::getInstance()->save();
 ?>
