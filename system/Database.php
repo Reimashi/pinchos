@@ -28,7 +28,7 @@ if (defined('PINCHOSFW'))
          */
         public static function getDatabase()
         {
-            if (  !self::$instance instanceof self)
+            if (!self::$instance instanceof self)
             {
                 self::$instance = new self;
             }
