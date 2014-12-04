@@ -44,7 +44,11 @@
                             <li><a href="<?php echo SITE_URL . '/index.php/autenticacion/autenticarUsuario' ?>" class="button button-blue">Iniciar sesión</a></li>
                             <?php
                         }
-                        ?>
+                        else {
+                            ?>
+                            <li><a href="<?php echo SITE_URL . '/index.php/usuario/registrarUsuario' ?>" class="button button-blue">Registrarse</a></li>
+                            <?php
+                        } ?>
                     </ul>
                 </div>
                 <div class="clear-float"></div>
