@@ -19,42 +19,38 @@ if (defined('PINCHOSFW'))
         */
         public function crearUsuario ($usuario) {
             if (isset($usuario['email']) && isset($usuario['password']) && isset($usuario['role'])) {
-                // Desactivamos el autocommit para forzar operacion atomica.
-                $mysqli->autocommit(FALSE);
 
-                $querytuser = "INSERT INTO `" . $this->table_user . "` (email, password) VALUES (" . $usuario['email'] . "," . $usuario['password'] . ")";
-                $this->db->query($querytuser);
+                $querytuser = "INSERT INTO `" . $this->table_user . "` (email, password) VALUES (\"" . $usuario['email'] . "\", \"" . $usuario['password'] . "\")";
+                if ($this->db->query($querytuser)) {
+                    switch ($usuario['role']) {
+                        case $this->role_user_popu:
+                            $querytusersp = "INSERT INTO `" . $this->table_user_popu . "` (id) VALUES (\"" . $usuario['email'] . "\")";
+                            break;
+                        case $this->role_user_prof:
+                            $querytusersp = "INSERT INTO `" . $this->table_user_prof . "` (id, nombre, apellidos) VALUES (\"" . $usuario['email'] . "\", \"" . $usuario['firstname'] . "\", \"" . $usuario['lastname'] . "\")";
+                            break;
+                        case $this->role_user_orga:
+                            $querytusersp = "INSERT INTO `" . $this->table_user_orga . "` (id, nombre, apellidos) VALUES (\"" . $usuario['email'] . "\", \"" . $usuario['firstname'] . "\", \"" . $usuario['lastname'] . "\")";
+                            break;
+                        case $this->role_user_part:
+                            $querytusersp = "INSERT INTO `" . $this->table_user_part . "` (id, nombre, direccion) VALUES (\"" . $usuario['email'] . "\", \"" . $usuario['localname'] . "\", \"" . $usuario['localaddr'] . "\")";
+                            break;
+                        default:
+                            trigger_error('No se ha especificado un tipo de usuario.', E_USER_ERROR);
+                            break;
+                    }
 
-                switch ($usuario['role']) {
-                    case $role_user_popu:
-                        $querytusersp = "INSERT INTO `" . $this->table_user_popu . "` (id) VALUES (" . $usuario['email'] . ")";
-                        $this->db->query($querytusersp);
-                        break;
-                    case $role_user_prof:
-                        $querytusersp = "INSERT INTO `" . $this->table_user_prof . "` (id, nombre, apellidos) VALUES (" . $usuario['email'] . ", " . $usuario['firstname'] . ", " . $usuario['lastname'] . ")";
-                        $this->db->query($querytusersp);
-                        break;
-                    case $role_user_orga:
-                        $querytusersp = "INSERT INTO `" . $this->table_user_orga . "` (id, nombre, apellidos) VALUES (" . $usuario['email'] . ", " . $usuario['firstname'] . ", " . $usuario['lastname'] . ")";
-                        $this->db->query($querytusersp);
-                        break;
-                    case $role_user_part:
-                        $querytusersp = "INSERT INTO `" . $this->table_user_part . "` (id, nombre, direccion) VALUES (" . $usuario['email'] . ", " . $usuario['firstname'] . ", " . $usuario['address'] . ")";
-                        $this->db->query($querytusersp);
-                        break;
-                    default:
-                        trigger_error('No se ha especificado un tipo de usuario.', E_USER_ERROR);
-                        break;
-                }
-
-                $opstate = $mysqli->commit();
-                $mysqli->autocommit(TRUE);
-
-                if ($opstate) {
-                    return TRUE;
+                    if ($this->db->query($querytusersp)) {
+                        return TRUE;
+                    }
+                    else {
+                        trigger_error('No se ha podido crear el usuario especifico en la base de datos (' . $this->db->errno . ').', E_USER_WARNING);
+                        $this->borrarUsuario($usuario['email']);
+                        return FALSE;
+                    }
                 }
                 else {
-                    trigger_error('No se ha podido crear el usuario en la base de datos (' . $this->db->errno . ').', E_USER_ERROR);
+                    trigger_error('No se ha podido crear el usuario en la base de datos (' . $this->db->errno . ').', E_USER_WARNING);
                     return FALSE;
                 }
             }
@@ -93,27 +89,31 @@ if (defined('PINCHOSFW'))
 
                 // Comprobamos si el usuario pertenece a otro tipo de usuario
                 $query = "SELECT * FROM `$this->table_user_popu` WHERE id = '$email'";
-                if ($data = $this->db->query($query) && $data->num_rows == 1) {
+                $data = $this->db->query($query);
+                if ($data && $data->num_rows == 1) {
                     $userinfo['role'] = $this->role_user_popu;
                     return $userinfo;
                 }
 
                 $query = "SELECT nombre, apellidos FROM `$this->table_user_prof` WHERE id = '$email'";
-                if ($data = $this->db->query($query) && $data->num_rows == 1) {
+                $data = $this->db->query($query);
+                if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
                     $userinfo['role'] = $this->role_user_prof;
                     return $userinfo;
                 }
 
                 $query = "SELECT nombre, apellidos FROM `$this->table_user_orga` WHERE id = '$email'";
-                if ($data = $this->db->query($query) && $data->num_rows == 1) {
+                $data = $this->db->query($query);
+                if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
                     $userinfo['role'] = $this->role_user_orga;
                     return $userinfo;
                 }
 
                 $query = "SELECT nombre, direccion FROM `$this->table_user_part` WHERE id = '$email'";
-                if ($data = $this->db->query($query) && $data->num_rows == 1) {
+                $data = $this->db->query($query);
+                if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
                     $userinfo['role'] = $this->role_user_part;
                     return $userinfo;
