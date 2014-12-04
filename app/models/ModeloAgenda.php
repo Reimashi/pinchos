@@ -9,7 +9,7 @@ if (defined('PINCHOSFW'))
     */
     public function consultarAgenda ($idconcurso=1) {
 
-      $agenda = this->db->query('SELECT nombre,descripcion,fecha_inicio,fecha_fin FROM agenda WHERE id_concurso= '.$idconcurso.'');
+      $agenda = this->db->query("SELECT nombre,descripcion,fecha_inicio,fecha_fin FROM agenda WHERE id_concurso=1");
 
       return $agenda;
 

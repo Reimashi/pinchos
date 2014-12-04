@@ -57,12 +57,12 @@ if (defined('PINCHOSFW'))
         */
         public function obtenerLocalizaciones ($params) {
 
-          $validar = $params['post']['validado'];
+          $modeloLocalizaciones = $this->loadModel('Localizaciones');
+          $modeloLocalizaciones->consultarAgenda($validar);
 
-          $modeloconcurso = $this->loadModel('Localizaciones');
-          $localizaciones=$modeloConcurso->consultarLocalizaciones($validar);
-          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
-          $this->render('FormularioBuscador', $localizaciones);
+          $htmlform = $this->render('BuscarInformacion/PaginaLocalizaciones', null, true);
+          $this->render('Principal', array('body-containers' => array($htmlform)));
+
         }
 
         /**
@@ -70,12 +70,12 @@ if (defined('PINCHOSFW'))
         */
         private function obtenerBases ($params) {
 
-          $validar = $params['post']['validado'];
+          $modeloBases = $this->loadModel('Bases');
+          $modeloBases->consultarAgenda($validar);
 
-          $modeloconcurso = $this->loadModel('Bases');
-          $bases=$modeloConcurso->consultarBases($validar);
-          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
-          $this->render('FormularioBuscador', $bases);
+          $htmlform = $this->render('BuscarInformacion/PaginaBases', null, true);
+          $this->render('Principal', array('body-containers' => array($htmlform)));
+          
 
         }
 
