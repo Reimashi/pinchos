@@ -3,6 +3,8 @@
 	<br>
 	<h1>Pincho añadido</h1><br>
 
+	<p>Nombre: <?php echo $params['nombre']; ?></p>
+	<p>Nombre: <?php echo $params['descripcion']; ?></p><br>
 	<p>Pulsa "Atrás" para volver a la página principal</p>
     <input type="submit" value="Atras">
 </form>

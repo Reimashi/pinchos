@@ -4,6 +4,7 @@ if (defined('PINCHOSFW'))
     require_once (SYSTEM_FOLDER . 'Controller.php');
     
     class ControladorPincho extends Controller {
+
         /**
         * Metodo por defecto del controlador.
         */
@@ -23,17 +24,17 @@ if (defined('PINCHOSFW'))
             if(isset($params['post']['form-name']) && $params['post']['form-name'] = 'pincho-registry'){
 
                 $datosPincho = array();
-                $datosPincho['nombre'] = "Nombre: ";
-                $datosPincho['descripcion'] = "Descripcion: \n";
                 $datosPincho['nombre'] .= $params['post']['nombre'];
                 $datosPincho['descripcion'] .= $params['post']['descripcion'];
 
                 $modeloPincho = $this->loadModel('Pinchos');
-                $modeloPincho->registrarPincho($datosPincho);
+                if($modeloPincho->registrarPincho($datosPincho)){
+                    return $this->registrarPinchoVerFormularioSuccess($configvistaprincipal, $datosPincho);
+                }else{
+                    trigger_error('Error al registrar el pincho (' . $this->db->errno . ').', E_USER_ERROR);
+                }
 
-                $configvistaprincipal['body-containers'][] = $datosPincho['nombre'];
-                $configvistaprincipal['body-containers'][] = $datosPincho['descripcion'];
-                return $this->registrarPinchoVerFormularioSuccess($configvistaprincipal);
+                
             
             }else{
 
@@ -52,23 +53,29 @@ if (defined('PINCHOSFW'))
             );
 
             if(isset($params['post']['form-name']) && $params['post']['form-name'] == "pincho-validate"){
-                $idpincho = $params['post']['id'];
                 
-                if(isset($params['post']['validar'])){
+                $idpincho = $params['post']['idpincho'];
+
+                if ($params['post']['validar'] == 'VALIDATE') {
                     $validar = "YES";
-    
+                    $modeloPincho->validarPincho($validar, $idpincho)
+                }
+                if ($params['post']['validar'] == 'DENEGATE') {
+                    $validar = "NO";
                     $modeloPincho->validarPincho($validar, $idpincho);
-                }else{
-                    if(isset($params['post']['denegar'])){
-                        $validar = "NO";
-    
-                        $modeloPincho->validarPincho($validar, $idpincho);
-                    }else{
-                         trigger_error('Operacion no realizada', E_USER_ERROR);
+                }
+                
+            }else{
+                $pinchos = array();
+                $pin_f = array();
+                $modeloPincho = $this->loadModel('Pinchos');
+                $pinchos = $modeloPincho->listarPinchos();
+                foreach ($pinchos as $pincho) {
+                    if($pincho['validado'] == 'WAITING'){
+                        $pin_f[] = $pincho;
                     }
                 }
-            }else{
-                return $this->validarPinchoVerFormulario($configvistaprincipal);
+                return $this->validarPinchoVerFormulario($configvistaprincipal, $pin_f);
             }
         }
 
@@ -104,16 +111,16 @@ if (defined('PINCHOSFW'))
             $this->render('Principal', $configvistaprincipal);
         }
 
-        public function registrarPinchoVerFormularioSuccess($configvistaprincipal){
-            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPinchoSuccess', null, true);
+        public function registrarPinchoVerFormularioSuccess($configvistaprincipal, $datosPincho){
+            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPinchoSuccess', $datosPincho, true);
             $configvistaprincipal['css'] = array(
                 RESOURCES_URL . 'styles/Pinchos.css'
             );
             $this->render('Principal', $configvistaprincipal);
         }
 
-        public function validarPinchoVerFormulario($configvistaprincipal){
-            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioValidarPincho', null, true);
+        public function validarPinchoVerFormulario($configvistaprincipal, $lista){
+            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioValidarPincho', $lista, true);
             $configvistaprincipal['css'] = array(
                 RESOURCES_URL . 'styles/Pinchos.css'
             );

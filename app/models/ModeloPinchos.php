@@ -5,20 +5,34 @@ if (defined('PINCHOSFW'))
 
     class ModeloPinchos extends Model {
 
+        private $table_user = 'pinchos';
+        private $id_concurso = '1';
         /**
         * Registra un nuevo pincho en la base de datos.
         */
         public function registrarPincho ($pincho) {
+            if($_SESSION['user']['info']['role'] == 'utype_parti'){
+                if(isset($pincho['nombre']) && isset($pincho['descripcion'])){
 
-            if(isset($pincho['nombre']) && isset($pincho['descripcion'])){
-
-                $code = str_split($pincho['nombre'], 3);
-                $sql = "INSERT INTO pinchos (id, id_concurso, nombre, descripcion) VALUES (" . $code[0] . ", ". 1 .", " . $pincho['nombre'] . ", " . $pincho['descripcion'] . ")";
-                $this->db->query($sql);
-                
+                    $nombre = $pincho['nombre'];
+                    $descripcion = $pincho['descripcion'];
+                    $sesion = $_SESSION['user']['info']['email'];
+                    $code = str_split($pincho['nombre'], 3);
+                    $sql = "INSERT INTO pinchos "."(id, id_participante, id_concurso, nombre, descripcion) "."VALUES('$code[0]', '$sesion', 1, '$nombre','$descripcion')";
+                    if($this->db->query($sql)){
+                        return TRUE;
+                    }else{
+                        trigger_error('Pincho no registrado (' . $this->db->errno . ').', E_USER_WARNING);
+                        return FALSE;
+                    }
+                    
+                }else{
+                    trigger_error('Parametros insuficientes (' . $this->db->errno . ').', E_USER_WARNING);
+                    return FALSE;
+                }
             }else{
-                trigger_error('Parametros insuficientes (' . $this->db->errno . ').', E_USER_ERROR);
-
+                trigger_error('Permisos insuficientes para registrar un pincho (' . $this->db->errno . ').', E_USER_ERROR);
+                return FALSE;
             }
             
         }
@@ -27,11 +41,23 @@ if (defined('PINCHOSFW'))
         * Valida un pincho y lo registra en la base de datos.
         */
         public function validarPincho ($estado, $idpincho) {
-
-            if(isset($idpincho) && isset($estado)){
-                $this->db->query("UPDATE pinchos SET validado='$estado' WHERE id='$idpincho'");
+            if($_SESSION['user']['info']['role'] == 'utype_organ'){
+                if(isset($idpincho) && isset($estado)){
+                    $sql = "UPDATE pinchos SET validado='$estado' WHERE id='$idpincho'";
+                    if($this->db->query($sql)){
+                        return TRUE;
+                    }else{
+                        trigger_error('Pincho no actualizado (' . $this->db->errno . ').', E_USER_WARNING);
+                        return FALSE;
+                    }
+                }else{
+                    trigger_error('Parametros insuficientes (' . $this->db->errno . ').', E_USER_WARNING);
+                    return FALSE;
+                }
+            }else{
+                trigger_error('Permisos insuficientes para registrar un pincho (' . $this->db->errno . ').', E_USER_ERROR);
+                return FALSE;
             }
-       
         }
 
         /**
@@ -44,6 +70,22 @@ if (defined('PINCHOSFW'))
 
                 return $pincho;
             }
+        }
+
+        /**
+        * Obtiene todos los pinchos desde la base de datos.
+        * TODO: Comprobar si es necesario el id del concurso.
+        */
+        public function listarPinchos () {
+                
+                $lista_pinchos = array();
+                $sql = "SELECT * FROM pinchos";
+                $pinchos = $this->db->query($sql);
+
+                while($pincho = $pinchos->fetch_assoc()) {
+                    $lista_pinchos[] = $pincho;
+                }
+                return $lista_pinchos;
         }
 
         /**
