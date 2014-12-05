@@ -58,7 +58,7 @@ if (defined('PINCHOSFW'))
 
                 if ($params['post']['validar'] == 'VALIDATE') {
                     $validar = "YES";
-                    $modeloPincho->validarPincho($validar, $idpincho)
+                    $modeloPincho->validarPincho($validar, $idpincho);
                 }
                 if ($params['post']['validar'] == 'DENEGATE') {
                     $validar = "NO";
