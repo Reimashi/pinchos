@@ -64,15 +64,13 @@ if (defined('PINCHOSFW'))
         * Obtiene un pincho desde la base de datos.
         */
         public function obtenerPincho ($idpincho) {
-            public function obtenerPincho ($idpincho) {
-                $pincho = $this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
+            $pincho = $this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
 
-                if ($pincho && $pincho->num_rows == 1) {
-                    return $pincho->fetch_assoc();
-                }
-
-                return FALSE;
+            if ($pincho && $pincho->num_rows == 1) {
+                return $pincho->fetch_assoc();
             }
+
+            return FALSE;
         }
 
         /**
