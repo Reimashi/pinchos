@@ -29,9 +29,9 @@
                 </div>
                 <div id="head-menu">
                     <ul>
-                        <li><a href="<?php echo SITE_URL . '/index.php' ?>" class="menu-item">Inicio</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerLocalizaciones' ?>" class="menu-item">Participantes</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerBases' ?>" class="menu-item">Bases</a></li>
+                        <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerPremios' ?>" class="menu-item">Premios</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerAgenda' ?>" class="menu-item">Agenda</a></li>
                         <?php
                         if (isset($params['user']) && $params['user']->loguedin()) {
