@@ -1,81 +1,60 @@
 <?php
 if (defined('PINCHOSFW'))
 {
-  require_once (SYSTEM_FOLDER . 'Model.php');
+    require_once (SYSTEM_FOLDER . 'Model.php');
 
-  class ModeloVoto extends Model {
-    /**
-    * Registra un voto en la base de datos.
-    */
-    public function registrarVoto ($voto) {
-      if (isset($voto['codigo'])) {
-        $querytuser ='INSERT INTO votos_populares(id_jurado,id_codigo_ganador) VALUES (' . $voto['id_jurado'] . ',' . $voto['codigo_ganador'] . ')';
+    class ModeloVoto extends Model {
+        private $table_public_vote = 'votos_populares';
+        private $table_private_vote = 'votos_profesionales';
+        private $table_public_codereg = 'codigos_votados';
 
-        $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo1']')';
-        $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo2']')';
-        $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo3']')';
+        /**
+        * Registra un voto publico en la base de datos.
+        */
+        public function registrarVotoPublico ($voto) {
+            if (isset($voto['codigo'])) {
+                $querytuser ='INSERT INTO votos_populares(id_jurado,id_codigo_ganador) VALUES (' . $voto['id_jurado'] . ',' . $voto['codigo_ganador'] . ')';
 
-        if ($this->db->query($querytuser) === TRUE) {
-          return TRUE;
+                $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo1'].')';
+                $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo2'].')';
+                $querytuser= 'INSERT INTO codigos_votados(id_codigo) VALUES ('.$voto['codigo3'].')';
+
+                if ($this->db->query($querytuser) === TRUE) {
+                  return TRUE;
+                }
+                else {
+                  trigger_error('No se ha podido emitir el voto (' . $this->db->errno . ').', E_USER_ERROR);
+                  return FALSE;
+              }
+            }
+            else {
+                trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
+                return FALSE;
+            }
         }
-        else {
-          trigger_error('No se ha podido emitir el voto (' . $this->db->errno . ').', E_USER_ERROR);
-          return FALSE;
+
+        /**
+        * Registra un voto privado en la base de datos.
+        */
+        public function registrarVotoPrivado ($idpincho, $idjurado, $nota) {
+          if ($nota > 100 || $nota < 0) {
+              return FALSE;
+          }
+
+          $query = 'INSERT INTO ' . $this->table_private_vote . ' (id_jurado, id_pincho, nota) VALUES (' . $idjurado . ', ' . $idpincho . ', ' . $nota . ')';
+          $queryresult = $this->db->query($query);
+
+          return ($queryresult) ? TRUE : FALSE;
         }
-      }
-      else {
-        trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
-        return FALSE;
-      }
 
 
-
-
-
-
-
-
-
-      /*
-      if (isset($voto['codigo'])) {
-      $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo1'] . ')';
-      if ($this->db->query($querytuser) === TRUE) {
-      $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo2'] . ')';
-      if ($this->db->query($querytuser) === TRUE) {
-      $querytuser ='INSERT INTO votos_populares(id_codigo) VALUES (' . $voto['codigo3'] . ')';
-      if ($this->db->query($querytuser) === TRUE) {
-      return TRUE;
-    }
-    else {
-    trigger_error('No se ha podido emitir el voto (' . $this->db->errno . ').', E_USER_ERROR);
-    return FALSE;
-  }
-}
-else {
-trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
-return FALSE;
-}
-}
-else {
-trigger_error('El metodo ModeloVoto->registrarVoto no ha recibido parametros suficientes.', E_USER_ERROR);
-return FALSE;
-}*/
-
-
-
-
-
-
-}
-
-/**
-* Cuenta los votos registrados en la base de datos de un pincho.
-*/
-public function contarVotos ($idpincho) {
-  trigger_error('Metodo no implementado.', E_USER_ERROR);
-}
-};
-
+        /**
+        * Cuenta los votos registrados en la base de datos de un pincho.
+        */
+        public function contarVotos ($idpincho) {
+          trigger_error('Metodo no implementado.', E_USER_ERROR);
+        }
+    };
 }
 else
 {
