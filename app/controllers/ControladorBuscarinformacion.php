@@ -81,21 +81,19 @@ if (defined('PINCHOSFW'))
         * Obtiene las bases de un concurso.
         */
         public function obtenerBases ($params) {
+            $baseform = array();
+            $htmlform = array();
 
-          $modeloConcurso = $this->loadModel('Concurso');
-          $datosConcurso = $modeloConcurso->consultarBases($params); // Que es validar?
+            $modeloConcurso = $this->loadModel('Concurso');
+            $datosConcurso = $modeloConcurso->consultarBases($params); // Que es validar?
 
-          if ($datosConcurso != null) {
+            if ($datosConcurso) {
+                $baseform['bases-content'] = $datosConcurso;
+            }
 
             $htmlform['body-containers'] = array();
-            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaBases', $datosConcurso, true);
+            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaBases', $baseform, true);
             $this->render('Principal', $htmlform);
-
-          }
-          else {
-            // Error por pantalla, no se pudo cargar la agenda
-          }
-
         }
 
         /**

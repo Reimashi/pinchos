@@ -130,6 +130,22 @@ header #head-menu li a.menu-item:hover {
 	margin: 0px auto;
 }
 
+.body-element-small {
+	width: 800px;
+}
+
+.body-element-title {
+	height: 30px;
+	background: #008AE6;
+	color: #fff;
+	font-size: 1.1em;
+}
+
+.body-element-title h1 {
+	margin: 0px 18px;
+	line-height: 30px;
+}
+
 .body-element-cont {
 	margin: 0px auto;
 	background: #fff;
