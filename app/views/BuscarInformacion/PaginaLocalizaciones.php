@@ -14,6 +14,11 @@
                     </div>
                     <div class="form-line form-line-space">&nbsp;</div>';
 
+                    if ($params['user']->is_role('utype_party')) {
+                        echo '<div class="body-element-line">(<a href="' . SITE_URL . '/index.php/pincho/registrarPincho">Participar con un pincho</a>)</div>';
+                        echo '<div class="form-line form-line-space">&nbsp;</div>';
+                    }
+
                     echo '<div class="generic-table"><table>';
                     $pair = true;
                     foreach ($params['places-content'] as $evento) {
