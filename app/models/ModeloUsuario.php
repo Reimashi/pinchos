@@ -7,7 +7,7 @@ if (defined('PINCHOSFW'))
         private $table_user = 'usuario';
         private $table_user_popu = 'usuario_jurado_popular';
         private $role_user_popu = 'utype_popul';
-        private $table_user_prof = 'usuario_jurado_especialista';
+        private $table_user_prof = 'usuario_jurado_profesional';
         private $role_user_prof = 'utype_profe';
         private $table_user_part = 'usuario_participante';
         private $role_user_part = 'utype_parti';
@@ -79,7 +79,7 @@ if (defined('PINCHOSFW'))
         * Obtiene un usuario desde la base de datos.
         */
         public function obtenerUsuario ($email) {
-            $query = "SELECT * FROM `$this->table_user` WHERE email = '$email'";
+            $query = "SELECT * FROM `$this->table_user` WHERE email = '" . $email . "'";
             $userinfo = array();
 
             // Comprobamos que el usuario exista
@@ -88,14 +88,14 @@ if (defined('PINCHOSFW'))
                 $userinfo = $data->fetch_assoc();
 
                 // Comprobamos si el usuario pertenece a otro tipo de usuario
-                $query = "SELECT * FROM `$this->table_user_popu` WHERE id = '$email'";
+                $query = "SELECT * FROM `$this->table_user_popu` WHERE id = '" . $email . "'";
                 $data = $this->db->query($query);
                 if ($data && $data->num_rows == 1) {
                     $userinfo['role'] = $this->role_user_popu;
                     return $userinfo;
                 }
 
-                $query = "SELECT nombre, apellidos FROM `$this->table_user_prof` WHERE id = '$email'";
+                $query = "SELECT nombre, apellidos FROM `$this->table_user_prof` WHERE id = '" . $email . "'";
                 $data = $this->db->query($query);
                 if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
@@ -103,7 +103,7 @@ if (defined('PINCHOSFW'))
                     return $userinfo;
                 }
 
-                $query = "SELECT nombre, apellidos FROM `$this->table_user_orga` WHERE id = '$email'";
+                $query = "SELECT nombre, apellidos FROM `$this->table_user_orga` WHERE id = '" . $email . "'";
                 $data = $this->db->query($query);
                 if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
@@ -111,7 +111,7 @@ if (defined('PINCHOSFW'))
                     return $userinfo;
                 }
 
-                $query = "SELECT nombre, direccion FROM `$this->table_user_part` WHERE id = '$email'";
+                $query = "SELECT nombre, direccion FROM `$this->table_user_part` WHERE id = '" . $email . "'";
                 $data = $this->db->query($query);
                 if ($data && $data->num_rows == 1) {
                     $userinfo = array_merge($userinfo, $data->fetch_assoc());
