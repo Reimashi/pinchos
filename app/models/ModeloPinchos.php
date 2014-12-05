@@ -108,31 +108,20 @@ if (defined('PINCHOSFW'))
         * FIXME: Creo que se le debe pasar el id de concurso, comprobadlo.
         */
         public function obtenerLocalizaciones () {
-
-          /*  $localizaciones = array();
-            $sql = $this->db->query("SELECT usuario_participante.direccion FROM pinchos, usuario_participante WHERE pinchos.validado='VALIDATE' AND pinchos.id_participante=usuario_participante.id");
-            while($row = fetch_array($sql)){
-                $localizaciones[]=$row;
-            }*/
-
-
-
             $qresult = $this->db->query("SELECT pinchos.nombre , usuario_participante.direccion FROM pinchos, usuario_participante WHERE pinchos.validado='VALIDATE' AND pinchos.id_participante=usuario_participante.id");
 
             if ($qresult && $qresult->num_rows > 0) {
-              $localizaciones = array();
+                $localizaciones = array();
 
-              // Se recorren las filas encontradas en la base de datos
-              while ($entradalocalizaciones = $qresult->fetch_assoc()) {
-                $localizaciones[] = $entradalocalizaciones;
-              }
-
-              return $localizaciones;
+                // Se recorren las filas encontradas en la base de datos
+                while ($entradalocalizaciones = $qresult->fetch_assoc()) {
+                    $localizaciones[] = $entradalocalizaciones;
+                }
+                return $localizaciones;
             }
             else {
-              return FALSE;
+                return FALSE;
             }
-
         }
 
         /**
