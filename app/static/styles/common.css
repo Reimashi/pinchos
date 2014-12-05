@@ -207,3 +207,37 @@ footer a {
 	border: 2px solid #bbf;
 	border-radius: 5px;
 }
+
+.generic-table {
+	margin:0px;padding:0px;
+	width:100%;
+	border:1px solid #666666;
+	border-radius:3px;
+}
+
+.generic-table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+.generic-table {
+	background: #00a1ff;
+}
+
+.generic-table td, .generic-table th {
+	text-align: center;
+	vertical-align:middle;
+	padding: 6px 12px;
+}
+
+.generic-table tr.row-pair {
+	background: #b5d2ff;
+}
+
+.generic-table tr.row-nopair {
+	background: #ddeeff;
+}
