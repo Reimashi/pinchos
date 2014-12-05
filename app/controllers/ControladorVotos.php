@@ -15,33 +15,50 @@ if (defined('PINCHOSFW'))
         * Emite un voto desde un usuario jurado publico.
         */
         public function emitirVotoPublico ($params) {
-          $configvistaprincipal = array(
-            'body-containers' => array()
-          );
+            $configvistaprincipal = array(
+                'body-containers' => array()
+            );
+            
 
-          //codigos_votados(id_voto,id_codigo)
+            if ($params['post']['form-name'] && $params['post']['form-name'] == 'poular-vote-select'){
 
-          // Si ha recibido los valores de formulario en un post
-          if (isset($params['post']['form-name']) && $params['post']['form-name'] = 'votoPopular')
-          {
-            $datosUsuario = array();
+                        $modeloPincho = $this->loadModel('pinchos');
+                        $votos = array();
+                        $votos[] = $params['post']['code'];
+                        $modeloPincho->registrarVotoPublico($votos, false);
 
-            // Cargamos el modelo de voto
-            $modeloUsuario = $this->loadModel('voto');
+                        $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoSeleccionarVoto', $votos, true);
+                        $confprincipal['css'] = array(
+                            RESOURCES_URL . 'styles/Votes.css'
+                        );
+                        $this->render('Principal', $confprincipal);
 
-            // Creamos el usuario en la base de datos
-            $modeloUsuario->emitirVoto($datosUsuario);
+                }
+                if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'popular-vote-codes') {
+                     // Cargamos el modelo de voto
+                    $modeloVoto = $this->loadModel('voto');
 
-            // Mostramos la vista de tarea completa
-            return $this->registrarUsuarioVerFormularioSuccess($configvistaprincipal);
-          }
-          else {
-            return $this->registrarUsuarioVerFormulario($configvistaprincipal);
-          }
+                    // Registramos el voto en la base de datos
+                    $votos = array();
+                    $votos['code-01'] = $params['post']['code-01'];
+                    $votos['code-02'] = $params['post']['code-02'];
+                    $votos['code-03'] = $params['post']['code-03'];
+                    $modeloVoto->registrarVotoPublico($votos, true);
 
+                    // Mostramos la vista de tarea completa
+                    $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', ($error= false) ? array('form-error' => $error) : null, true);
+                    $this->render('Principal', $confprincipal);
+                }else{
 
-        }
-
+                    $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', ($error= false) ? array('form-error' => $error) : null, true);
+                    $confprincipal['css'] = array(
+                        RESOURCES_URL . 'styles/Votes.css'
+                    );
+                    $this->render('Principal', $confprincipal);
+                }
+                
+                
+            }
         /**
         * Emite un voto desde un usuario jurado profesional.
         */
@@ -64,7 +81,6 @@ if (defined('PINCHOSFW'))
                         $modeloVoto->registrarVotoPrivado($params['post']['idvoto'], $this->user->email, $params['post']['evaluation']);
 
                         // Mostramos la vista de tarea completa
-                        $this->registrarUsuarioVerFormularioSuccess($configvistaprincipal);
                     }
                     else {
                         $paramess = array ('info' => array(
@@ -79,22 +95,21 @@ if (defined('PINCHOSFW'))
                     $modeloPincho = $this->loadModel('pinchos');
                     $infopincho = $modeloPincho->obtenerPincho($params[0]);
 
-                    if ($infopincho && $infopincho['validado'] == 'VALIDATE') { // FIXME: Poner YES
+                    if ($infopincho && $infopincho['validado'] == 'YES') {
                         $paramess = array ('info' => $infopincho);
                         $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPrivado', $paramess, true);
                     }
                     else {
                         $confprincipal['body-containers'][] = $this->render('PaginaError', array('error' => 'El pincho indicado no existe.'), true);
                     }
-                }
-                else {
+                }else {
                     $confprincipal['body-containers'][] = $this->render('PaginaError', array('error' => 'No se ha indicado un pincho.'), true);
                 }
             }
             else {
                 $confprincipal['body-containers'][] = $this->render('PaginaError', array('error' => 'No tiene permiso para acceder a esta pagina.'), true);
             }
-
+            $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPrivado', ($error= false) ? array('form-error' => $error) : null, true);
             $this->render('Principal', $confprincipal);
         }
 

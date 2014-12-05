@@ -1,4 +1,4 @@
-<form name="popular-vote-select" action="index.php/votos/FormularioEmitirVotoPopular" method="POST">
+<form name="popular-vote-select" action="emitirVotoPublico" method="POST">
     <input type="hidden" name="form-name" value="popular-vote-select">
 
     <div class="form-element" style="display:none;">
