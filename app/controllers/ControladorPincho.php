@@ -17,20 +17,23 @@ if (defined('PINCHOSFW'))
         */
         public function registrarPincho ($params) {
             $configvistaprincipal = array(
-                'body-containers' => array()
+                'body-containers' => array(),
             );
 
             if(isset($params['post']['form-name']) && $params['post']['form-name'] = 'pincho-registry'){
 
                 $datosPincho = array();
-
-                $datosPincho['nombre'] = $params['post']['form-name'];
-                $datosPincho['descripcion'] = $params['post']['descripcion'];
+                $datosPincho['nombre'] = "Nombre: ";
+                $datosPincho['descripcion'] = "Descripcion: \n";
+                $datosPincho['nombre'] .= $params['post']['nombre'];
+                $datosPincho['descripcion'] .= $params['post']['descripcion'];
 
                 $modeloPincho = $this->loadModel('Pinchos');
                 $modeloPincho->registrarPincho($datosPincho);
 
-                return $this->registrarPinchoVerFormularioSucces($configvistaprincipal);
+                $configvistaprincipal['body-containers'][] = $datosPincho['nombre'];
+                $configvistaprincipal['body-containers'][] = $datosPincho['descripcion'];
+                return $this->registrarPinchoVerFormularioSuccess($configvistaprincipal);
             
             }else{
 
@@ -44,24 +47,28 @@ if (defined('PINCHOSFW'))
         */
         public function validarPincho ($params) {
             
+            $configvistaprincipal = array(
+                'body-containers' => array()
+            );
+
             if(isset($params['post']['form-name']) && $params['post']['form-name'] == "pincho-validate"){
                 $idpincho = $params['post']['id'];
                 
                 if(isset($params['post']['validar'])){
-                    $validar = $params['post']['validar'];
+                    $validar = "YES";
     
-                    $modeloPincho = $this->loadModel('Pincho');
                     $modeloPincho->validarPincho($validar, $idpincho);
                 }else{
                     if(isset($params['post']['denegar'])){
-                        $denegar = $params['post']['denegar'];
+                        $validar = "NO";
     
-                        $modeloPincho = $this->loadModel('Pincho');
-                        $modeloPincho->validarPincho($denegar, $idpincho);
+                        $modeloPincho->validarPincho($validar, $idpincho);
                     }else{
                          trigger_error('Operacion no realizada', E_USER_ERROR);
                     }
                 }
+            }else{
+                return $this->validarPinchoVerFormulario($configvistaprincipal);
             }
         }
 
@@ -97,8 +104,16 @@ if (defined('PINCHOSFW'))
             $this->render('Principal', $configvistaprincipal);
         }
 
-        public function registrarPinchoVerFormularioSucces($configvistaprincipal){
+        public function registrarPinchoVerFormularioSuccess($configvistaprincipal){
             $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioRegistrarPinchoSuccess', null, true);
+            $configvistaprincipal['css'] = array(
+                RESOURCES_URL . 'styles/Pinchos.css'
+            );
+            $this->render('Principal', $configvistaprincipal);
+        }
+
+        public function validarPinchoVerFormulario($configvistaprincipal){
+            $configvistaprincipal['body-containers'][] = $this->render('Pinchos/FormularioValidarPincho', null, true);
             $configvistaprincipal['css'] = array(
                 RESOURCES_URL . 'styles/Pinchos.css'
             );

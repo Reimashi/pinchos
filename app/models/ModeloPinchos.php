@@ -4,23 +4,23 @@ if (defined('PINCHOSFW'))
     require_once(SYSTEM_FOLDER . 'Model.php');
 
     class ModeloPinchos extends Model {
+
         /**
         * Registra un nuevo pincho en la base de datos.
         */
         public function registrarPincho ($pincho) {
-            if($this->user->loguedin() && $this->user->is_role("usuario_participante"))
-            {
-                if(isset($pincho['nombre']) && isset($pincho['descripcion'])){
 
-                    $iduser = array();
-                    $iduser = $this->user->get_info();
-                    $code = str_split($pincho['nombre'], 3);
-                    $this->db->query("INSERT INTO pinchos VALUES (" . $code[0] . ", " . $iduser['id'] . ", ". 1 .", " . $pincho['nombre'] . ", " . $pincho['descripcion'] . ")");
-                }
+            if(isset($pincho['nombre']) && isset($pincho['descripcion'])){
 
+                $code = str_split($pincho['nombre'], 3);
+                $sql = "INSERT INTO pinchos (id, id_concurso, nombre, descripcion) VALUES (" . $code[0] . ", ". 1 .", " . $pincho['nombre'] . ", " . $pincho['descripcion'] . ")";
+                $this->db->query($sql);
+                
             }else{
-                trigger_error('No dispone de permisos suficientes (' . $this->db->errno . ').', E_USER_ERROR);
+                trigger_error('Parametros insuficientes (' . $this->db->errno . ').', E_USER_ERROR);
+
             }
+            
         }
 
         /**
@@ -28,13 +28,10 @@ if (defined('PINCHOSFW'))
         */
         public function validarPincho ($estado, $idpincho) {
 
-            if($this->user->loguedin() && $this->user->is_role("usuario_organizador")){
-                if(isset($idpincho) && isset($estado)){
-                    $this->db->query("UPDATE pinchos SET validado='$estado' WHERE id='$idpincho'");
-                }
-            }else{
-                trigger_error('No dispone de permisos suficientes (' . $this->db->errno . ').', E_USER_ERROR);
+            if(isset($idpincho) && isset($estado)){
+                $this->db->query("UPDATE pinchos SET validado='$estado' WHERE id='$idpincho'");
             }
+       
         }
 
         /**
@@ -107,6 +104,7 @@ if (defined('PINCHOSFW'))
                 trigger_error('No dispone de permisos suficientes (' . $this->db->errno . ').', E_USER_ERROR);
             }
         }
+
     };
 
 }
