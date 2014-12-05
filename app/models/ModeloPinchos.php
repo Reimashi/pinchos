@@ -25,7 +25,7 @@ if (defined('PINCHOSFW'))
                         trigger_error('Pincho no registrado (' . $this->db->errno . ').', E_USER_WARNING);
                         return FALSE;
                     }
-                    
+
                 }else{
                     trigger_error('Parametros insuficientes (' . $this->db->errno . ').', E_USER_WARNING);
                     return FALSE;
@@ -34,7 +34,7 @@ if (defined('PINCHOSFW'))
                 trigger_error('Permisos insuficientes para registrar un pincho (' . $this->db->errno . ').', E_USER_ERROR);
                 return FALSE;
             }
-            
+
         }
 
         /**
@@ -64,11 +64,14 @@ if (defined('PINCHOSFW'))
         * Obtiene un pincho desde la base de datos.
         */
         public function obtenerPincho ($idpincho) {
-            if(isset($idpincho)){
-
+            public function obtenerPincho ($idpincho) {
                 $pincho = $this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
 
-                return $pincho;
+                if ($pincho && $pincho->num_rows == 1) {
+                    return $pincho->fetch_assoc();
+                }
+
+                return FALSE;
             }
         }
 
@@ -77,7 +80,7 @@ if (defined('PINCHOSFW'))
         * TODO: Comprobar si es necesario el id del concurso.
         */
         public function listarPinchos () {
-                
+
                 $lista_pinchos = array();
                 $sql = "SELECT * FROM pinchos";
                 $pinchos = $this->db->query($sql);
