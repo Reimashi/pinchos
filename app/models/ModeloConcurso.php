@@ -18,6 +18,23 @@ if (defined('PINCHOSFW'))
                 return FALSE;
             }
         }
+
+        public function obtenerConcurso ($idconcurso = 1, $campos = null) {
+
+            $qresult = $this->db->query("SELECT * FROM concursos WHERE id = " . $idconcurso);
+
+            if ($qresult && $qresult->num_rows == 1) {
+                if ($campos == null) {
+                    return $qresult->fetch_assoc();
+                }
+                else {
+                    return array_intersect_key($qresult->fetch_assoc(), array_flip($campos));
+                }
+            }
+            else {
+                return FALSE;
+            }
+        }
     };
 }
 else
