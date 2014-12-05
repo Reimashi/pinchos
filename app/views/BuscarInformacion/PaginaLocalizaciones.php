@@ -2,7 +2,7 @@
 
 <?php foreach($params as $array): ?>
 
-<p>Localizacion: <?php print_r($array['nombre']); ?></p>
-<p>Localizacion: <?php print_r($array['direccion']); ?></p>
+<p>Nombre del pincho: <?php echo $array['nombre']; ?></p>
+<p>Localizacion: <?php echo $array['direccion']; ?></p>
 
 <?php endforeach ;?>
