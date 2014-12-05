@@ -8,7 +8,7 @@ if (defined('PINCHOSFW'))
         * Metodo por defecto del controlador.
         */
         public function index ($params) {
-            return buscarInformacion($params);
+            return $this->obtenerLocalizaciones($params);
         }
 
         /**
@@ -63,20 +63,32 @@ if (defined('PINCHOSFW'))
         * Obtiene las localizaciones de los pinchos de un concurso.
         */
         public function obtenerLocalizaciones ($params) {
+            $baseform = array();
+            $htmlform = array();
 
-          $modeloPinchos = $this->loadModel('Pinchos');
-          $datosPinchos = $modeloPinchos->obtenerLocalizaciones($params); // Que es validar?
+            $modeloConcurso = $this->loadModel('Concurso');
+            // Sin soporte para multiples concursos, concurso siempre será 1
+            $datosConcurso = $modeloConcurso->obtenerConcurso(1, array('nombre', 'descripcion', 'fecha'));
 
-          if ($datosPinchos != null) {
+            if ($datosConcurso) {
+                $baseform['concurso-info'] = $datosConcurso;
+            }
+            else {
+                $htmlform['body-containers'] = array();
+                $htmlform['body-containers'][] = $this->render('PaginaError', array('error' => 'Aún no se ha registrado ningún concurso.'), true);
+                return $this->render('Principal', $htmlform);
+            }
+
+            $modeloPinchos = $this->loadModel('Pinchos');
+            $datosPinchos = $modeloPinchos->obtenerLocalizaciones();
+
+            if ($datosPinchos) {
+                $baseform['places-content'] = $datosPinchos;
+            }
 
             $htmlform['body-containers'] = array();
-            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaLocalizaciones', $datosPinchos, true);
+            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaLocalizaciones', $baseform, true);
             $this->render('Principal', $htmlform);
-
-          }
-          else {
-            // Error por pantalla, no se pudo cargar la agenda
-          }
         }
 
         /**
