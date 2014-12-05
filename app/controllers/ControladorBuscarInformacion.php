@@ -45,7 +45,7 @@ if (defined('PINCHOSFW'))
         */
         public function obtenerAgenda ($params) {
             $modeloAgenda = $this->loadModel('Agenda');
-            $datosAgenda = $modeloAgenda->consultarAgenda($validar); // Que es validar?
+            $datosAgenda = $modeloAgenda->consultarAgenda($params); // Que es validar?
 
             if ($datosAgenda != null) {
                 $htmlform['body-containers'] = array();
@@ -63,7 +63,7 @@ if (defined('PINCHOSFW'))
         public function obtenerLocalizaciones ($params) {
 
           $modeloPinchos = $this->loadModel('Pinchos');
-          $datosPinchos = $modeloPinchos->obtenerLocalizaciones($validar); // Que es validar?
+          $datosPinchos = $modeloPinchos->obtenerLocalizaciones($params); // Que es validar?
 
           if ($datosPinchos != null) {
 
@@ -80,10 +80,10 @@ if (defined('PINCHOSFW'))
         /**
         * Obtiene las bases de un concurso.
         */
-        private function obtenerBases ($params) {
+        public function obtenerBases ($params) {
 
           $modeloConcurso = $this->loadModel('Concurso');
-          $datosConcurso = $modeloConcurso->consultarBases($validar); // Que es validar?
+          $datosConcurso = $modeloConcurso->consultarBases($params); // Que es validar?
 
           if ($datosConcurso != null) {
 

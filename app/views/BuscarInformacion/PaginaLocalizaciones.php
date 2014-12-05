@@ -1,3 +1,8 @@
 
 
-<p>Nombre del concurso: <?php print_r($params[0]['direccion']); ?></p>
+<?php foreach($params as $array): ?>
+
+<p>Localizacion: <?php print_r($array['nombre']); ?></p>
+<p>Localizacion: <?php print_r($array['direccion']); ?></p>
+
+<?php endforeach ;?>

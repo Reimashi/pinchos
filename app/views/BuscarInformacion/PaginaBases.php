@@ -1,3 +1,3 @@
 
 
-<p>Nombre del concurso: <?php print_r($params[0]['bases']); ?></p>
+  <p>Bases del concurso: <?php echo $params[0]['bases'] ; ?> </</p>

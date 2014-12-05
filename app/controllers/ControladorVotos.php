@@ -46,7 +46,29 @@ if (defined('PINCHOSFW'))
     * Emite un voto desde un usuario jurado profesional.
     */
     private function emitirVotoProfesional ($params) {
-      trigger_error('Metodo no implementado.', E_USER_ERROR);
+      $configvistaprincipal = array(
+        'body-containers' => array()
+      );
+
+      //codigos_votados(id_voto,id_codigo)
+
+      // Si ha recibido los valores de formulario en un post
+      if (isset($params['post']['form-name']) && $params['post']['form-name'] = 'votoPrivado')
+      {
+        $datosUsuario = array();
+
+        // Cargamos el modelo de voto
+        $modeloUsuario = $this->loadModel('voto');
+
+        // Creamos el usuario en la base de datos
+        $modeloUsuario->emitirVoto($datosUsuario);
+
+        // Mostramos la vista de tarea completa
+        return $this->registrarUsuarioVerFormularioSuccess($configvistaprincipal);
+      }
+      else {
+        return $this->registrarUsuarioVerFormulario($configvistaprincipal);
+      }
     }
 
     /**
