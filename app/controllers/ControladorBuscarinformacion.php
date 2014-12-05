@@ -114,13 +114,20 @@ if (defined('PINCHOSFW'))
         * Obtiene la lista de premios de un concurso.
         */
 
-        private function obtenerPremios ($params) {
-          $validar = $params['post']['validado'];
+        public function obtenerPremios ($params) {
+            $baseform = array();
+            $htmlform = array();
 
-          $modeloconcurso = $this->loadModel('Premios');
-          $premios=$modeloConcurso->consultarPremios($validar);
-          //include($_SERVER['DOCUMENT_ROOT'].'/views/BuscarInformacion/FormularioBuscador.php')
-          $this->render('FormularioBuscador', $premios);
+            $modeloPremios = $this->loadModel('Premios');
+            $premios = $modeloPremios->consultarPremios(1);
+
+            if ($premios) {
+                $baseform['premios-content'] = $premios;
+            }
+
+            $htmlform['body-containers'] = array();
+            $htmlform['body-containers'][] = $this->render('BuscarInformacion/PaginaPremios', $baseform, true);
+            $this->render('Principal', $htmlform);
         }
     };
 
