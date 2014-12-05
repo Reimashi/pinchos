@@ -4,6 +4,6 @@
 
 $config = array();
 
-$config['default_controller'] = 'Inicio';
+$config['default_controller'] = 'Buscarinformacion';
 
 ?>
