@@ -38,7 +38,7 @@ if (defined('PINCHOSFW'))
         public function crearConcurso ($concurso) {
 
 
-            $querytuser = "INSERT INTO `" . $this->table_user . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
+            $querytuser = "INSERT INTO `" . $this->table_concurso . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
 
 
               if ($this->db->query($querytusersp)) {
