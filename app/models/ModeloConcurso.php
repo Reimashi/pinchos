@@ -35,6 +35,41 @@ if (defined('PINCHOSFW'))
                 return FALSE;
             }
         }
+        public function crearConcurso ($concurso) {
+
+
+            $querytuser = "INSERT INTO `" . $this->table_user . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
+
+
+              if ($this->db->query($querytusersp)) {
+                return TRUE;
+              }
+
+              else {
+              trigger_error('No se ha podido crear el concurso en la base de datos (' . $this->db->errno . ').', E_USER_WARNING);
+              return FALSE;
+            }
+
+          else {
+            trigger_error('El metodo ModeloConcurso->crearConcurso no ha recibido parametros suficientes.', E_USER_ERROR);
+            return FALSE;
+          }
+        }
+
+        /**
+        * Borra un usuario en la base de datos.
+        */
+        public function borrarConcurso ($email) {
+          // Solo es necesario borrar en la tabla usuario, el delete cascade se encarga del resto
+          $query = "DELETE FROM `$this->table_concurso` WHERE nombre = '$nombre'";
+
+          if ($this->db->query($query)) {
+            return TRUE;
+          }
+          else {
+            return FALSE;
+          }
+        }
     };
 }
 else
