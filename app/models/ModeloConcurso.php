@@ -35,25 +35,23 @@ if (defined('PINCHOSFW'))
                 return FALSE;
             }
         }
+
         public function crearConcurso ($concurso) {
+            if (is_array($concurso)) {
+                $querytuser = "INSERT INTO `" . $this->table_concurso . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
 
-
-            $querytuser = "INSERT INTO `" . $this->table_concurso . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
-
-
-              if ($this->db->query($querytusersp)) {
-                return TRUE;
-              }
-
-              else {
-              trigger_error('No se ha podido crear el concurso en la base de datos (' . $this->db->errno . ').', E_USER_WARNING);
-              return FALSE;
+                if ($this->db->query($querytusersp)) {
+                    return TRUE;
+                }
+                else {
+                    trigger_error('No se ha podido crear el concurso en la base de datos (' . $this->db->errno . ').', E_USER_WARNING);
+                    return FALSE;
+                }
             }
-
-          else {
-            trigger_error('El metodo ModeloConcurso->crearConcurso no ha recibido parametros suficientes.', E_USER_ERROR);
-            return FALSE;
-          }
+            else {
+                trigger_error('El metodo ModeloConcurso->crearConcurso no ha recibido parametros suficientes.', E_USER_ERROR);
+                return FALSE;
+            }
         }
 
         /**
