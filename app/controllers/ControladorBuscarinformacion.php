@@ -15,30 +15,31 @@ if (defined('PINCHOSFW'))
         * Busca informacion a partir de un string en el sistema.
         */
         public function buscarInformacion ($params) {
-          if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'buscador') {
+            if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'buscador') {
 
-            if($params['post']['tipo_busqueda'] == 'Agenda')
-            {
-              $this->obtenerAgenda($params);
+                if($params['post']['tipo_busqueda'] == 'Agenda')
+                {
+                    $this->obtenerAgenda($params);
+                }
+                if($params['post']['form-name'] == 'Bases')
+                {
+                    $this->render('PaginaBases', null);
+                }
+                if($params['post']['form-name'] == 'Localizacion')
+                {
+                    $this->render('PaginaLocalizaciones', null);
+                }
+                if($params['post']['form-name'] == 'Premios')
+                {
+                    $this->render('PaginaPremios', null);
+                }
             }
-            if($params['post']['form-name'] == 'Bases')
-            {
-              $this->render('PaginaBases', null);
+            else {
+                // Imprimes formulario
+                $htmlform = $this->render('BuscarInformacion/FormularioBuscador', null, true);
+                $this->render('Principal', array('body-containers' => array($htmlform)));
             }
-            if($params['post']['form-name'] == 'Localizacion')
-            {
-              $this->render('PaginaLocalizaciones', null);
-            }
-            if($params['post']['form-name'] == 'Premios')
-            {
-              $this->render('PaginaPremios', null);
-            }
-          }
-          else {
-            // Imprimes formulario
-            $htmlform = $this->render('BuscarInformacion/FormularioBuscador', null, true);
-            $this->render('Principal', array('body-containers' => array($htmlform)));
-          }        }
+        }
 
         /**
         * Muestra la agenda de un concurso.
