@@ -7,17 +7,16 @@
         <div class="form-line form-line-space">&nbsp;</div>
         <div>
             <?php
+                if ($params['user']->is_role('utype_parti')) {
+                    echo '<div class="body-element-line" style="text-align: center; font-size: 0.8em;">(Tu puedes participar con un pincho, <a href="' . SITE_URL . '/index.php/pincho/registrarPincho">registrate</a>.)</div>';
+                    echo '<div class="form-line form-line-space">&nbsp;</div>';
+                }
                 if (isset($params['places-content'])) {
 
                     echo '<div class="body-element-title">
                         <h1>Lista de concursantes</h1>
                     </div>
                     <div class="form-line form-line-space">&nbsp;</div>';
-
-                    if ($params['user']->is_role('utype_party')) {
-                        echo '<div class="body-element-line">(<a href="' . SITE_URL . '/index.php/pincho/registrarPincho">Participar con un pincho</a>)</div>';
-                        echo '<div class="form-line form-line-space">&nbsp;</div>';
-                    }
 
                     echo '<div class="generic-table"><table>';
                     $pair = true;
