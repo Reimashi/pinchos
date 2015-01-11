@@ -3,7 +3,7 @@ if (defined('PINCHOSFW'))
 {
     require_once (SYSTEM_FOLDER . 'Controller.php');
 
-    class ControladorUsuario extends Controller {
+    class ControladorConcurso extends Controller {
         /**
         * Metodo por defecto del controlador.
         */
