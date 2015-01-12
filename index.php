@@ -11,9 +11,14 @@
     $rootfpath = pathinfo($_SERVER['SCRIPT_NAME']);
     $httpprotocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https://' : 'http://';
 
-    define ("BASE_PATH", basename($rootpath['dirname']));
-    define ("APP_FOLDER", realpath(dirname(BASE_PATH)) . "/app/");
-    define ("SYSTEM_FOLDER", realpath(dirname(BASE_PATH)) . "/system/");
+    $count = 1;
+    $rootxpath = str_replace(pathinfo($_SERVER['SCRIPT_NAME'])['dirname'], "", pathinfo($_SERVER['SCRIPT_FILENAME'])['dirname'], $count);
+    $count = 1;
+    $godpath = str_replace($rootxpath, "", pathinfo($_SERVER['SCRIPT_FILENAME'])['dirname'], $count);
+
+    define ("BASE_PATH", $godpath);
+    define ("APP_FOLDER", $rootpath['dirname'] . "/app/");
+    define ("SYSTEM_FOLDER", $rootpath['dirname'] . "/system/");
     define ("SITE_URL", $httpprotocol . $_SERVER['HTTP_HOST'] . (($rootfpath['dirname'] != '\\') ? $rootfpath['dirname'] : ''));
     define ("RESOURCES_URL", SITE_URL . '/app/static/');
 

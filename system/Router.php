@@ -39,19 +39,21 @@ if (defined('PINCHOSFW'))
 
         private function get_route($uripath) {
             $routeinfo = array();
-
+            
             // Limpiamos la URL
-            if (strrpos($uripath, BASE_PATH)) {
+            if (strrpos($uripath, BASE_PATH) !== FALSE) {
                 $count = 1;
                 $uripath = str_replace(BASE_PATH, "", $uripath, $count);
             }
 
-            if (strrpos($uripath, "index.php")) {
+
+            if (strrpos($uripath, "index.php") !== FALSE) {
                 $count = 1;
                 $uripath = str_replace("index.php", "", $uripath, $count);
             }
 
-            if (strrpos($uripath, "?")) {
+
+            if (strrpos($uripath, "?") !== FALSE) {
                 $uripath = substr($uripath, 0, strrpos($uripath, "?"));
             }
 
