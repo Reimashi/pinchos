@@ -14,51 +14,115 @@ if (defined('PINCHOSFW'))
         /**
         * Emite un voto desde un usuario jurado publico.
         */
-        public function emitirVotoPublico ($params) {
+        public function emitirVotoPopular ($params) {
             $configvistaprincipal = array(
                 'body-containers' => array()
             );
             
-
-            if ($params['post']['form-name'] && $params['post']['form-name'] == 'poular-vote-select'){
-
-                        $modeloPincho = $this->loadModel('pinchos');
-                        $votos = array();
-                        $votos[] = $params['post']['code'];
-                        $modeloPincho->registrarVotoPublico($votos, false);
-
-                        $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoSeleccionarVoto', $votos, true);
-                        $confprincipal['css'] = array(
-                            RESOURCES_URL . 'styles/Votes.css'
-                        );
-                        $this->render('Principal', $confprincipal);
-
-                }
-                if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'popular-vote-codes') {
-                     // Cargamos el modelo de voto
-                    $modeloVoto = $this->loadModel('voto');
-
-                    // Registramos el voto en la base de datos
-                    $votos = array();
-                    $votos['code-01'] = $params['post']['code-01'];
-                    $votos['code-02'] = $params['post']['code-02'];
-                    $votos['code-03'] = $params['post']['code-03'];
-                    $modeloVoto->registrarVotoPublico($votos, true);
-
-                    // Mostramos la vista de tarea completa
-                    $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', ($error= false) ? array('form-error' => $error) : null, true);
-                    $this->render('Principal', $confprincipal);
-                }else{
-
-                    $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', ($error= false) ? array('form-error' => $error) : null, true);
-                    $confprincipal['css'] = array(
+            if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'popular-vote-select'){
+                $modeloPincho = $this->loadModel('pinchos');
+                $modeloVoto = $this->loadModel('voto');
+                $paramsview = array();
+                
+                if (isset($params['post']['codeselected']) && 
+                        $params['post']['codeselected'] != "" && 
+                        $modeloPincho->comprobarCodigo($params['post']['codeselected'])) {
+                    $modeloVoto->registrarVotoPublico($params['post']['codeselected'],
+                            array (
+                                $params['post']['code-01'],
+                                $params['post']['code-02'],
+                                $params['post']['code-03']
+                            ));
+                    
+                    $paramsview['body-containers'][] = $this->render('Votos/FormularioVotadoSuccess', $paramsview, true);
+                    $paramsview['css'] = array(
                         RESOURCES_URL . 'styles/Votes.css'
                     );
-                    $this->render('Principal', $confprincipal);
+                    $this->render('Principal', $paramsview);
+                }
+                else {
+                    $paramsview['form-error'] = "Ha habido un error al registrar el voto para el pincho seleccionado.";
+                    $paramsview['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', $paramsview, true);
+                    $paramsview['css'] = array(
+                        RESOURCES_URL . 'styles/Votes.css'
+                    );
+                    $this->render('Principal', $paramsview);
+                }
+                $votos = array();
+                $votos[] = $params['post']['code'];
+                $modeloPincho->registrarVotoPublico($votos, false);
+
+                $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoSeleccionarVoto', $votos, true);
+                $confprincipal['css'] = array(
+                    RESOURCES_URL . 'styles/Votes.css'
+                );
+                $this->render('Principal', $confprincipal);
+
+            }
+            if (isset($params['post']['form-name']) && $params['post']['form-name'] == 'popular-vote-codes') {
+                $modeloPincho = $this->loadModel('pinchos');
+                $paramsview = array();
+                
+                if (isset($params['post']['code-01']) && 
+                        $params['post']['code-01'] != "" && 
+                        $modeloPincho->comprobarCodigo($params['post']['code-01'])) {
+                    $paramsview['codes']['codes-01'] = $params['post']['code-01'];
+                }
+                else {
+                    $paramsview['form-error'] = "El codigo 01 es inválido.";
+                    $paramsview['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', $paramsview, true);
+                    $paramsview['css'] = array(
+                        RESOURCES_URL . 'styles/Votes.css'
+                    );
+                    $this->render('Principal', $paramsview);
                 }
                 
+                if (isset($params['post']['code-02']) && 
+                        $params['post']['code-02'] != "" && 
+                        $modeloPincho->comprobarCodigo($params['post']['code-02'])) {
+                    $paramsview['codes']['codes-02'] = $params['post']['code-02'];
+                }
+                else {
+                    $paramsview['form-error'] = "El codigo 02 es inválido.";
+                    $paramsview['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', $paramsview, true);
+                    $paramsview['css'] = array(
+                        RESOURCES_URL . 'styles/Votes.css'
+                    );
+                    $this->render('Principal', $paramsview);
+                }
                 
+                if (isset($params['post']['code-03']) && 
+                        $params['post']['code-03'] != "" && 
+                        $modeloPincho->comprobarCodigo($params['post']['code-03'])) {
+                    $paramsview['codes']['codes-03'] = $params['post']['code-03'];
+                }
+                else {
+                    $paramsview['form-error'] = "El codigo 03 es inválido.";
+                    $paramsview['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', $paramsview, true);
+                    $paramsview['css'] = array(
+                        RESOURCES_URL . 'styles/Votes.css'
+                    );
+                    $this->render('Principal', $paramsview);
+                }
+                
+                $paramsview['form-error'] = "El codigo 03 es inválido.";
+                $paramsview['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublicoSelect', $paramsview, true);
+                $paramsview['css'] = array(
+                    RESOURCES_URL . 'styles/Votes.css'
+                );
+                $this->render('Principal', $paramsview);
             }
+            else
+            {
+               $confprincipal['body-containers'][] = $this->render('Votos/FormularioEmitirVotoPublico', ($error= false) ? array('form-error' => $error) : null, true);
+               $confprincipal['css'] = array(
+                   RESOURCES_URL . 'styles/Votes.css'
+               );
+               $this->render('Principal', $confprincipal);
+            }
+                
+                
+        }
         /**
         * Emite un voto desde un usuario jurado profesional.
         */

@@ -146,6 +146,26 @@ if (defined('PINCHOSFW'))
                 trigger_error('No dispone de permisos suficientes (' . $this->db->errno . ').', E_USER_ERROR);
             }
         }
+        
+        public function comprobarCodigo($codigo) {
+            if (isset($codigo)) {
+                $sql="SELECT pinchos.id FROM codigos_pincho, pinchos WHERE codigo_pinchos.codigo = \"" . $codigo . "\" AND codigo_pinchos.id_pincho = pinchos.id";
+                $res = $this->db->query($sql);
+                if(!$res){
+                    trigger_error('Error al realizar la consulta.', E_USER_WARNING);
+                    return FALSE;
+                }
+                else {
+                    if ($res->num_rows > 0) {
+                        $data = $res->fetch_assoc();
+                        return $data['id'];
+                    }
+                    else {
+                        return FALSE;
+                    }
+                }
+            }
+        }
 
     };
 
