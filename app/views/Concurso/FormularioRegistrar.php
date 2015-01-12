@@ -2,7 +2,6 @@
 <form name="user-registry" action="<?php echo SITE_URL; ?>/index.php/concurso/registrarUsuario" method="POST">
     <input type="hidden" name="form-name" value="concurso-registry">
 
-    <?php } ?>
     <div id="urf_insert_data" class="form-element" <?php echo (!isset($params['post']['user-type'])) ? 'style="display:none;"' : '' ?>>
         <h1>Introduzca los datos de registro</h1>
         <div class="form-line">
