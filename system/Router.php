@@ -77,7 +77,7 @@ if (defined('PINCHOSFW'))
             $routeinfo['params']['post'] = (isset($_POST) && is_array($_POST)) ? $_POST : array();
 
             if (count($path) > 2) {
-                $routeinfo['params'] = array_merge($this->params, array_slice($path, 2));
+                $routeinfo['params'] = array_merge($routeinfo['params'], array_slice($path, 2));
             }
 
             return $routeinfo;
