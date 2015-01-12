@@ -15,6 +15,8 @@ if (defined('PINCHOSFW'))
 
                 // Se recorren las filas encontradas en la base de datos
                 while ($entradaagenda = $qresult->fetch_assoc()) {
+                    $entradaagenda['nombre'] = utf8_encode($entradaagenda['nombre']);
+                    $entradaagenda['descripcion'] = utf8_encode($entradaagenda['descripcion']);
                     $agenda[] = $entradaagenda;
                 }
 

@@ -15,7 +15,7 @@ if (defined('PINCHOSFW'))
             $qresult = $this->db->query("SELECT bases FROM concursos WHERE id=1");
 
             if ($qresult && $qresult->num_rows == 1) {
-                return $qresult->fetch_assoc()['bases'];
+                return utf8_encode($qresult->fetch_assoc()['bases']);
             }
             else {
                 return FALSE;
@@ -27,11 +27,15 @@ if (defined('PINCHOSFW'))
             $qresult = $this->db->query("SELECT * FROM concursos WHERE id = " . $idconcurso);
 
             if ($qresult && $qresult->num_rows == 1) {
+                $cinfo = $qresult->fetch_assoc();
+                $cinfo['descripcion'] = utf8_encode($cinfo['descripcion']);
+                $cinfo['bases'] = utf8_encode($cinfo['bases']);
+                
                 if ($campos == null) {
-                    return $qresult->fetch_assoc();
+                    return $cinfo;
                 }
                 else {
-                    return array_intersect_key($qresult->fetch_assoc(), array_flip($campos));
+                    return array_intersect_key($cinfo, array_flip($campos));
                 }
             }
             else {

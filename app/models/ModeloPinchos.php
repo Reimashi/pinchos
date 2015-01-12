@@ -67,7 +67,11 @@ if (defined('PINCHOSFW'))
             $pincho = $this->db->query("SELECT * FROM pinchos WHERE id='$idpincho'");
 
             if ($pincho && $pincho->num_rows == 1) {
-                return $pincho->fetch_assoc();
+                $pinfo = $pincho->fetch_assoc();
+                $pinfo['nombre'] = utf8_encode($pinfo['nombre']);
+                $pinfo['descripcion'] = utf8_encode($pinfo['descripcion']);
+                $pinfo['validado_reason'] = utf8_encode($pinfo['validado_reason']);
+                return $pinfo;
             }
 
             return FALSE;
@@ -84,6 +88,9 @@ if (defined('PINCHOSFW'))
                 $pinchos = $this->db->query($sql);
 
                 while($pincho = $pinchos->fetch_assoc()) {
+                    $pincho['nombre'] = utf8_encode($pincho['nombre']);
+                    $pincho['descripcion'] = utf8_encode($pincho['descripcion']);
+                    $pincho['validado_reason'] = utf8_encode($pincho['validado_reason']);
                     $lista_pinchos[] = $pincho;
                 }
                 return $lista_pinchos;
@@ -114,8 +121,11 @@ if (defined('PINCHOSFW'))
                 $localizaciones = array();
 
                 // Se recorren las filas encontradas en la base de datos
-                while ($entradalocalizaciones = $qresult->fetch_assoc()) {
-                    $localizaciones[] = $entradalocalizaciones;
+                while ($pincho = $qresult->fetch_assoc()) {
+                    $pincho['nombre'] = utf8_encode($pincho['nombre']);
+                    $pincho['direccion'] = utf8_encode($pincho['direccion']);
+                    
+                    $localizaciones[] = $pincho;
                 }
                 return $localizaciones;
             }

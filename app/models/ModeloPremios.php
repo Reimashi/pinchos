@@ -15,6 +15,8 @@ if (defined('PINCHOSFW'))
 
                 // Se recorren las filas encontradas en la base de datos
                 while ($premio = $qresult->fetch_assoc()) {
+                    $premio['nombre'] = utf8_encode($premio['nombre']);
+                    $premio['descripcion'] = utf8_encode($premio['descripcion']);
                     $premios[] = $premio;
                 }
 
@@ -24,12 +26,64 @@ if (defined('PINCHOSFW'))
                 return FALSE;
             }
         }
-
+        
+        public function listarPremios ($idconcurso) {
+            $pcg = $this->listarPremiosConGanador($idconcurso);
+            $psg = $this->listarPremiosSinGanador($idconcurso);
+            
+            if (is_array($psg) && is_array($pcg)) {
+                return array_merge($psg, $pcg);
+            }
+            else {
+                return FALSE;
+            }
+        }
+        
         /**
-        * Consulta la información de un premio en la base de datos.
+        * Consulta los premios de un concurso en la base de datos.
         */
-        public function consultarPremio ($idconcurso, $idpremio) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+        public function listarPremiosSinGanador ($idconcurso) {
+            $qresult = $this->db->query("SELECT nombre, descripcion FROM premios WHERE id_concurso = \"" . $idconcurso . '" AND ganador IS NULL');
+
+            if ($qresult && $qresult->num_rows > 0) {
+                $premios = array();
+
+                // Se recorren las filas encontradas en la base de datos
+                while ($premio = $qresult->fetch_assoc()) {
+                    $premio['nombre'] = utf8_encode($premio['nombre']);
+                    $premio['descripcion'] = utf8_encode($premio['descripcion']);
+                    $premios[] = $premio;
+                }
+
+                return $premios;
+            }
+            else {
+                return FALSE;
+            }
+        }
+        
+        /**
+        * Consulta los premios de un concurso en la base de datos.
+        */
+        public function listarPremiosConGanador ($idconcurso) {
+            $qresult = $this->db->query("SELECT premios.nombre, premios.descripcion, usuario_participante.nombre ganador FROM premios, usuario_participante WHERE premios.id_concurso = \"" . $idconcurso . '" AND premios.ganador = usuario_participante.id');
+
+            if ($qresult && $qresult->num_rows > 0) {
+                $premios = array();
+
+                // Se recorren las filas encontradas en la base de datos
+                while ($premio = $qresult->fetch_assoc()) {
+                    $premio['nombre'] = utf8_encode($premio['nombre']);
+                    $premio['descripcion'] = utf8_encode($premio['descripcion']);
+                    $premio['ganador'] = utf8_encode($premio['ganador']);
+                    $premios[] = $premio;
+                }
+
+                return $premios;
+            }
+            else {
+                return FALSE;
+            }
         }
     };
 
