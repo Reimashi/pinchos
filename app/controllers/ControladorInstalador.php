@@ -54,6 +54,14 @@ if (defined('PINCHOSFW'))
                     }
                 }
                 
+                if (!file_exists(APP_FOLDER . "config/Common.php")) {
+                    $config = array();
+                    $config['default_controller'] = 'Buscarinformacion';
+                    if (!$this->generate_conf_file("Common", $config)) {
+                        return $this->render('Instalacion', array('form-error' => "No se ha podido crear el archivo de configuracion. Comprueba que PHP tiene permisos de escritura.<br>"));
+                    }
+                }
+                
                 if(!$this->import_sql(APP_FOLDER . 'create.sql',
                         $params['post']['dbhost'],  
                         $params['post']['dbuser'], 
