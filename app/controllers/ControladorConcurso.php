@@ -27,8 +27,7 @@ if (defined('PINCHOSFW'))
                 $datosUsuario['fecha'] = (isset($params['post']['date'])) ? $params['post']['date'] : '';
                 $datosUsuario['descripcion'] = (isset($params['post']['description'])) ? $params['post']['description'] : '';
                 $datosUsuario['bases'] = (isset($params['post']['bases'])) ? $params['post']['bases'] : '';
-
-
+            }
         }
 
         private function registrarConcursoVerFormulario($confprincipal, $params = array(), $error = false) {
