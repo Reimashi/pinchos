@@ -4,6 +4,9 @@ if (defined('PINCHOSFW'))
     require_once (SYSTEM_FOLDER . 'Model.php');
 
     class ModeloConcurso extends Model {
+
+        private $table_concurso = 'concursos';
+        
         /**
         * Consulta las bases de un concurso en la base de datos.
         */
@@ -38,9 +41,35 @@ if (defined('PINCHOSFW'))
 
         public function crearConcurso ($concurso) {
             if (is_array($concurso)) {
-                $querytuser = "INSERT INTO `" . $this->table_concurso . "` (nombre,fecha,descripcion,bases) VALUES (\"" . $concurso['nombre'] . "\", \"" . $concurso['fecha'] ."\", \"" . $concurso['descripcion'] ."\", \"" . $concurso['bases'] . "\")";
+                $queryinser = "INSERT INTO `" . $this->table_concurso . "` (";
+                $queryval = ") VALUES (";
+                
+                if (isset($concurso['nombre'])) {
+                    $queryinser .= "nombre";
+                    $queryval .= '"' . $concurso['nombre'] . '"';
+                }
+                else {
+                    return FALSE;
+                }
+                
+                if (isset($concurso['fecha'])) {
+                    $queryinser .= ", fecha";
+                    $queryval .= ', "' . $concurso['fecha'] . '"';
+                }
+                
+                if (isset($concurso['descripcion'])) {
+                    $queryinser .= ", descripcion";
+                    $queryval .= ', "' . $concurso['descripcion'] . '"';
+                }
+                
+                if (isset($concurso['bases'])) {
+                    $queryinser .= ", bases";
+                    $queryval .= ', "' . $concurso['bases'] . '"';
+                }
+                
+                $querytuser = $queryinser . $queryval . ")";
 
-                if ($this->db->query($querytusersp)) {
+                if ($this->db->query($querytuser)) {
                     return TRUE;
                 }
                 else {
