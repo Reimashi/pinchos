@@ -120,7 +120,7 @@ if (defined('PINCHOSFW'))
             $htmlform = array();
 
             $modeloPremios = $this->loadModel('Premios');
-            $premios = $modeloPremios->consultarPremios(1);
+            $premios = $modeloPremios->listarPremios(1);
 
             if ($premios) {
                 $baseform['premios-content'] = $premios;
