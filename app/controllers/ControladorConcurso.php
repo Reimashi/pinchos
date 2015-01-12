@@ -60,10 +60,19 @@ if (defined('PINCHOSFW'))
         }
 
         /**
-        * Obtiene y muestra un usuario del sistema.
+        * Obtiene y muestra el concurso con posibilidad de editarlo
         */
-        public function obtenerConcurso ($params) {
-            trigger_error('Metodo no implementado.', E_USER_ERROR);
+        public function modificarConcurso ($params) {
+          $modeloConcurso = $this->loadModel('Concurso');
+          if(!isset($params['post']['Nombre']) || !isset($params['post']['Fecha']) || !isset($params['post']['Descripcion']) || !isset($params['post']['Bases'])){
+            $params = $modeloConcurso->obtenerConcurso();
+          } else {
+            $modeloConcurso->modificarConcurso($params);
+            $this->modificarConcurso();
+          }
+
+          $prueba['body-containers'][] = $this->render('Concurso/ConsultarConcurso', $params);
+          $this->render('Principal', $prueba);
         }
 
         /**

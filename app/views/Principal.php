@@ -29,6 +29,7 @@
                 </div>
                 <div id="head-menu">
                     <ul>
+                        <li><a href="<?php echo SITE_URL . '/index.php/Concurso/modificarConcurso' ?>" class="menu-item">Editar Concurso</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerLocalizaciones' ?>" class="menu-item">Participantes</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerBases' ?>" class="menu-item">Bases</a></li>
                         <li><a href="<?php echo SITE_URL . '/index.php/buscarinformacion/obtenerPremios' ?>" class="menu-item">Premios</a></li>
